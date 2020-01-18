@@ -1,0 +1,81 @@
+-- (c) 2019 - 2020 Anna Kagia (a_kagia@yahoo.com), Antonios Gouglidis (a.gouglidis@lancaster.ac.uk, agouglidis@gmail.com)
+
+MODULE main
+
+VAR
+	MEMBER : { ANY ,"alice@example.com" ,"data_uploaders@example.com" ,"jane@example.com" ,"harry@example.com" ,"bob@example.com" };
+	ROLE : { ANY ,"roles/storage.objectAdmin" ,"roles/storage.objectCreator" };
+	PRMS : { ANY ,"storage.objects.create" ,"storage.objects.delete" ,"storage.objects.update" ,"storage.objects.get" ,"storage.objects.getIamPolicy" ,"storage.objects.list" ,
+         "storage.objects.setIamPolicy" ,"resourcemanager.projects.get" ,"resourcemanager.projects.list" };
+	RSRC:  { ANY ,"example.com" ,"project_a" ,"upload_here" };
+	RH : { ANY ,Resources ,Projects ,Organization };
+	
+	
+	RBACGCP : RBACGCP ( MEMBER ,ROLE ,PRMS ,RSRC ,RH );
+	
+
+ASSIGN
+	next (MEMBER) := MEMBER ;
+	next (ROLE) := ROLE ;
+	next (PRMS) := PRMS ;
+	next (RSRC) := RSRC ;
+	next (RH) := RH ;
+	
+
+MODULE RBACGCP ( MEMBER ,ROLE ,PRMS ,RSRC ,RH)
+VAR
+	decision : {Grant, Deny};
+ASSIGN
+	init (decision) := Deny ;
+	next (decision) := case
+
+	----- "alice@example.com" -----
+	(MEMBER = "alice@example.com" | MEMBER = ANY) & ( ROLE = "roles/storage.objectAdmin" | ROLE = ANY) & 
+	(PRMS = "storage.objects.create" | PRMS = "storage.objects.delete" | PRMS = "storage.objects.update" | PRMS = "storage.objects.get" | 
+	 PRMS = "storage.objects.getIamPolicy" | PRMS = "storage.objects.list" | PRMS = "storage.objects.setIamPolicy" | PRMS = "resourcemanager.projects.get" | 
+	 PRMS = "resourcemanager.projects.list" | PRMS = ANY) & (RSRC = "project_a" | RSRC = "upload_here" | RSRC = ANY) & (RH = Projects | RH = Resources | RH = ANY) : Grant;
+
+	----- "data_uploaders@example.com" -----
+	(MEMBER = "data_uploaders@example.com"  | MEMBER = "jane@example.com" | MEMBER = "harry@example.com" | MEMBER = "bob@example.com" | MEMBER = ANY) & 
+	(ROLE = "roles/storage.objectCreator" | ROLE = ANY) & (PRMS = "storage.objects.create" | PRMS = "resourcemanager.projects.get" | PRMS = "resourcemanager.projects.list" | 
+	 PRMS = ANY) & (RSRC = "project_a" | RSRC = "upload_here" | RSRC = ANY) & (RH = Projects | RH = Resources | RH = ANY) : Grant;
+	
+	TRUE : Deny ;
+esac;
+
+
+-- Properties that check whether a certain member has a certain role on a certain resource  
+SPEC AG ((MEMBER = "alice@example.com") & (ROLE = "roles/storage.objectAdmin") & (PRMS = ANY) & (RSRC = "upload_here") & (RH = Resources) -> AF decision = Grant)  --> True 
+SPEC AG ((MEMBER = "data_uploaders@example.com") & (ROLE = "roles/storage.objectCreator") & (PRMS = ANY) & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> True
+SPEC AG ((MEMBER = "jane@example.com") & (ROLE = "roles/storage.objectCreator") & (PRMS = ANY) & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> True  
+
+-- Properties that check whether a certain member has a certain permission on a certain resource 
+SPEC AG ((MEMBER = "bob@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.create") & (RSRC = "upload_here") & (RH = Resources) -> AF decision = Grant)  --> True 
+SPEC AG ((MEMBER = "data_uploaders@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.delete") & (RSRC = "upload_here") & (RH = Resources) -> AF decision = Deny)  --> True 
+
+-- Property that checks whether a certain member has a certain role anywhere in the organization
+SPEC AG ((MEMBER = "harry@example.com") & (ROLE = "roles/storage.objectCreator") & (PRMS = ANY) & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> True
+
+--Property that checks whether a certain member has a certain permission anywhere in the organization
+SPEC AG ((MEMBER = "data_uploaders@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.delete") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> False 
+
+--Property that checks whether a certain member has any access authorization on a certain resource
+SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Grant)  --> False 
+
+--Property that checks whether a anyone has any access on a certain resource
+SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Deny)  --> True 
+
+--Property that checks whether a certain permission has been assigned to anyone on a certain resource
+SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "storage.objects.delete" | PRMS = "storage.objects.update" ) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Grant)  --> False 
+
+--Property that checks whether a certain member has a certain permission on a certain resource hierarchy level 
+SPEC AG ((MEMBER != "alice@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.create") & (RSRC = ANY) & (RH = Resources) -> AF decision = Deny)  --> False 
+ 
+--Property that checks whether a certain member has any access authorization (i.e. any role or permission) on a certain resource hierarchy level
+SPEC AG ((MEMBER = "alice@example.com" | MEMBER = "data_uploaders@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = ANY) & (RH = Organization) -> AF decision = Deny)  --> True 
+
+
+
+
+
+

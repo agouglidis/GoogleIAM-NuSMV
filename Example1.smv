@@ -1,0 +1,86 @@
+-- (c) 2019 - 2020 Anna Kagia (a_kagia@yahoo.com), Antonios Gouglidis (a.gouglidis@lancaster.ac.uk, agouglidis@gmail.com)
+
+MODULE main
+
+VAR
+	MEMBER : { ANY ,"bob@gmail.com" ,"alice@gmail.com" };
+	ROLE : { ANY ,"roles/pubsub.editor" ,"roles/pubsub.publisher" };
+	PRMS : { ANY ,"pubsub.topics.publish" ,"pubsub.topics.create" ,"pubsub.topics.delete" ,"pubsub.topics.get" ,"pubsub.topics.list" ,"pubsub.topics.update" ,"pubsub.topics.updateTag" ,
+	 "pubsub.topics.attachSubscription" ,"pubsub.snapshots.create" ,"pubsub.snapshots.delete" ,"pubsub.snapshots.get" ,"pubsub.snapshots.list" ,"pubsub.snapshots.seek" ,
+	 "pubsub.snapshots.update" ,"pubsub.subscriptions.consume" ,"pubsub.subscriptions.create" ,"pubsub.subscriptions.delete" ,"pubsub.subscriptions.get" ,"pubsub.subscriptions.list" ,
+	 "pubsub.subscriptions.update" ,"resourcemanager.projects.get" ,"serviceusage.quotas.get" ,"serviceusage.services.get" ,"serviceusage.services.list" };
+	RSRC:  { ANY ,"project_a" ,"topic_a" };
+	RH : { ANY ,Resources ,Projects ,Organization };
+	
+	
+	RBACGCP : RBACGCP ( MEMBER ,ROLE ,PRMS ,RSRC ,RH );
+	
+	
+ASSIGN
+	next (MEMBER) := MEMBER ;
+	next (ROLE) := ROLE ;
+	next (PRMS) := PRMS ;
+	next (RSRC) := RSRC ;
+	next (RH) := RH ;
+	
+
+MODULE RBACGCP ( MEMBER ,ROLE ,PRMS ,RSRC ,RH )
+VAR
+	decision : {Grant, Deny};
+ASSIGN
+	init (decision) := Deny ;
+	next (decision) := case
+----- Policies -----------------
+	----- "bob@gmail.com -------
+	(MEMBER = "bob@gmail.com" | MEMBER = ANY) & (ROLE = "roles/pubsub.editor" | ROLE = ANY) & 
+	(PRMS = "pubsub.topics.publish" | PRMS = "pubsub.topics.create" | PRMS = "pubsub.topics.delete" | PRMS = "pubsub.topics.get" | PRMS = "pubsub.topics.list" | 
+	PRMS = "pubsub.topics.update" | PRMS = "pubsub.topics.updateTag" | PRMS = "pubsub.topics.attachSubscription" | PRMS = "pubsub.snapshots.create" | 
+	PRMS = "pubsub.snapshots.delete" | PRMS = "pubsub.snapshots.get" | PRMS = "pubsub.snapshots.list" | PRMS = "pubsub.snapshots.seek" | PRMS = "pubsub.subscriptions.get" | 
+	PRMS = "pubsub.snapshots.update" | PRMS = "pubsub.subscriptions.consume" | PRMS = "pubsub.subscriptions.create" | PRMS = "pubsub.subscriptions.delete" | 
+	PRMS = "pubsub.subscriptions.list" | PRMS = "pubsub.subscriptions.update" | PRMS = "resourcemanager.projects.get" | PRMS = "serviceusage.quotas.get" | 
+	PRMS = "serviceusage.services.get" | PRMS = "serviceusage.services.list" | PRMS = ANY) & (RSRC = "project_a" | RSRC = "topic_a" | RSRC = ANY) & 
+	(RH = Projects | RH = Resources | RH = ANY) : Grant ;
+
+	----- "alice@gmail.com" -----
+	(MEMBER = "alice@gmail.com" | MEMBER = ANY) & (ROLE = "roles/pubsub.publisher" | ROLE = ANY) & (PRMS = "pubsub.topics.publish" | PRMS = ANY) & 
+	(RSRC = "topic_a" | RSRC = ANY) & (RH = Resources | RH = ANY) : Grant ;
+
+	TRUE : Deny ;
+esac;
+
+
+
+-- Properties that check whether a certain member has a certain role on a certain resource  
+SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> True 
+SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = "roles/pubsub.publisher") & (PRMS = ANY) & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> True
+SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> True  
+SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = "roles/pubsub.publisher") & (PRMS = ANY) & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> False
+
+-- Properties that check whether a certain member has a certain permission on a certain resource 
+SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> True 
+SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> True 
+SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.publish") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> True
+SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.publish") & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> False
+SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> False
+
+-- Property that checks whether a certain member has a certain role anywhere in the organization
+SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> True
+
+--Property that checks whether a certain member has a certain permission anywhere in the organization
+SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = ANY) & (RH = ANY) -> AF decision = Deny)  --> True
+
+--Property that checks whether a certain member has any access authorization on a certain resource
+SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "topic_a") & (RH = ANY) -> AF decision = Grant)  --> True
+
+--Property that checks whether a certain role has been assigned to anyone on a certain resource
+SPEC AG ((MEMBER = ANY) & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "project_a") & (RH = ANY) -> AF decision = Grant)  --> True 
+
+--Property that checks whether a certain permission has been assigned to anyone on a certain resource
+SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "pubsub.topics.create") & (RSRC = "project_a") & (RH = ANY) -> AF decision = Grant)  --> True 
+
+--Property that checks whether a certain role includes a certain permission
+SPEC AG ((MEMBER = ANY) & (ROLE = "roles/pubsub.publisher") & (PRMS = "pubsub.topics.create") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> True 
+
+
+
+

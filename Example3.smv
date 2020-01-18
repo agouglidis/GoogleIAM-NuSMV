@@ -1,0 +1,245 @@
+-- (c) 2019 - 2020 Anna Kagia (a_kagia@yahoo.com), Antonios Gouglidis (a.gouglidis@lancaster.ac.uk, agouglidis@gmail.com)
+
+MODULE main
+
+VAR
+	MEMBER : { ANY ,"bob@example.com" ,"alice@example.com" };
+	ROLE : { ANY ,"roles/compute.networkAdmin" ,"roles/compute.instanceAdmin" };
+	PRMS : { ANY ,"compute.addresses.create" ,"compute.addresses.createInternal" ,"compute.addresses.delete" ,"compute.addresses.deleteInternal" ,"compute.addresses.get" ,
+	"compute.addresses.list" ,	"compute.addresses.setLabels" ,	"compute.addresses.use" ,	"compute.addresses.useInternal" ,	"compute.autoscalers.get" ,	
+	"compute.autoscalers.list" ,	"compute.backendBuckets.create" ,	"compute.backendBuckets.delete" ,	"compute.backendBuckets.get" ,	"compute.backendBuckets.list" ,	
+	"compute.backendBuckets.update" ,	"compute.backendBuckets.use" ,	"compute.backendServices.create" ,	"compute.backendServices.delete" ,	"compute.backendServices.get" ,	
+	"compute.backendServices.list" ,	"compute.backendServices.setSecurityPolicy" ,	"compute.backendServices.update" ,	"compute.backendServices.use" ,	"compute.firewalls.get" ,
+	"compute.firewalls.list" ,	"compute.forwardingRules.create" ,	"compute.forwardingRules.delete" ,	"compute.forwardingRules.get" ,	"compute.forwardingRules.list" ,
+	"compute.forwardingRules.setLabels" ,	"compute.forwardingRules.setTarget" ,	"compute.globalAddresses.create" ,	"compute.globalAddresses.createInternal" ,	
+	"compute.globalAddresses.delete" ,	"compute.globalAddresses.deleteInternal" ,	"compute.globalAddresses.get" ,	"compute.globalAddresses.list" ,	
+	"compute.globalAddresses.setLabels" ,	"compute.globalAddresses.use" ,	"compute.globalForwardingRules.create" ,	"compute.globalForwardingRules.delete" ,	
+	"compute.globalForwardingRules.get" ,	"compute.globalForwardingRules.list" ,	"compute.globalForwardingRules.setLabels" ,	"compute.globalForwardingRules.setTarget" ,	
+	"compute.globalOperations.get" ,	"compute.globalOperations.list" ,	"compute.healthChecks.create" ,	"compute.healthChecks.delete" ,	"compute.healthChecks.get" ,	
+	"compute.healthChecks.list" ,	"compute.healthChecks.update" ,	"compute.healthChecks.use" ,	"compute.healthChecks.useReadOnly" ,	"compute.httpHealthChecks.create" ,	
+	"compute.httpHealthChecks.delete" ,	"compute.httpHealthChecks.get" ,	"compute.httpHealthChecks.list" ,	"compute.httpHealthChecks.update" ,	"compute.httpHealthChecks.use" ,
+	"compute.httpHealthChecks.useReadOnly" ,	"compute.httpsHealthChecks.create" ,	"compute.httpsHealthChecks.delete" ,	"compute.httpsHealthChecks.get" ,	
+	"compute.httpsHealthChecks.list" ,	"compute.httpsHealthChecks.update" ,	"compute.httpsHealthChecks.use" ,	"compute.httpsHealthChecks.useReadOnly" ,	
+	"compute.instanceGroupManagers.get" ,	"compute.instanceGroupManagers.list" ,	"compute.instanceGroupManagers.update" ,	"compute.instanceGroupManagers.use" ,	
+	"compute.instanceGroups.get" ,	"compute.instanceGroups.list" ,	"compute.instanceGroups.update" ,	"compute.instanceGroups.use" ,	"compute.instances.get" ,	
+	"compute.instances.getGuestAttributes" ,	"compute.instances.getSerialPortOutput" ,	"compute.instances.list" ,	"compute.instances.listReferrers" ,	
+	"compute.instances.use" ,	"compute.interconnectAttachments.create" ,	"compute.interconnectAttachments.delete" ,	"compute.interconnectAttachments.get" ,	
+	"compute.interconnectAttachments.list" ,	"compute.interconnectAttachments.setLabels" ,	"compute.interconnectAttachments.update" ,	"compute.interconnectAttachments.use" ,	
+	"compute.interconnectLocations.get" ,	"compute.interconnectLocations.list" ,	"compute.interconnects.create" ,	"compute.interconnects.delete" ,	
+	"compute.interconnects.get" ,	"compute.interconnects.list" ,	"compute.interconnects.setLabels" ,	"compute.interconnects.update" ,	"compute.interconnects.use" ,	
+	"compute.networkEndpointGroups.get" ,	"compute.networkEndpointGroups.list" ,	"compute.networkEndpointGroups.use" ,	"compute.networks.addPeering" ,	"compute.networks.create" ,
+	"compute.networks.delete" ,	"compute.networks.get" ,	"compute.networks.list" ,	"compute.networks.removePeering" ,	"compute.networks.switchToCustomMode" ,	
+	"compute.networks.update" ,	"compute.networks.updatePeering" ,	"compute.networks.updatePolicy" ,	"compute.networks.use" ,	"compute.networks.useExternalIp" ,	
+	"compute.projects.get" ,	"compute.regionBackendServices.create" ,	"compute.regionBackendServices.delete" ,	"compute.regionBackendServices.get" ,	
+	"compute.regionBackendServices.list" , "compute.regionBackendServices.setSecurityPolicy" ,	"compute.regionBackendServices.update" ,	"compute.regionBackendServices.use" ,	
+	"compute.regionOperations.get" ,	"compute.regionOperations.list" ,	"compute.regions.get" ,	"compute.regions.list" ,	"compute.routers.create" ,	
+	"compute.routers.delete" ,	"compute.routers.get" ,	"compute.routers.list" ,	"compute.routers.update" ,	"compute.routers.use" ,	"compute.routes.create" ,	
+	"compute.routes.delete" ,	"compute.routes.get" ,	"compute.routes.list" ,	"compute.securityPolicies.get" ,	"compute.securityPolicies.list" ,	
+	"compute.securityPolicies.use" ,	"compute.sslCertificates.get" ,	"compute.sslCertificates.list" ,	"compute.sslPolicies.create" ,	"compute.sslPolicies.delete" ,	
+	"compute.sslPolicies.get" ,	"compute.sslPolicies.list" ,	"compute.sslPolicies.listAvailableFeatures" ,	"compute.sslPolicies.update" ,	"compute.sslPolicies.use" ,
+	"compute.subnetworks.create" ,	"compute.subnetworks.delete" ,	"compute.subnetworks.expandIpCidrRange" ,	"compute.subnetworks.get" ,	"compute.subnetworks.getIamPolicy" ,	
+	"compute.subnetworks.list" ,	"compute.subnetworks.update" ,	"compute.subnetworks.use" ,	"compute.subnetworks.useExternalIp" ,	"compute.targetHttpProxies.create" ,	
+	"compute.targetHttpProxies.delete" ,	"compute.targetHttpProxies.get" ,	"compute.targetHttpProxies.list" ,	"compute.targetHttpProxies.setUrlMap" ,	
+	"compute.targetHttpProxies.use" ,	"compute.targetHttpsProxies.create" ,	"compute.targetHttpsProxies.delete" ,	"compute.targetHttpsProxies.get" ,	
+	"compute.targetHttpsProxies.list" ,	"compute.targetHttpsProxies.setSslCertificates" ,	"compute.targetHttpsProxies.setSslPolicy" ,	"compute.targetHttpsProxies.setUrlMap" ,	
+	"compute.targetHttpsProxies.use" ,	"compute.targetInstances.create" ,	"compute.targetInstances.delete" ,	"compute.targetInstances.get" ,	"compute.targetInstances.list" ,	
+	"compute.targetInstances.use" ,	"compute.targetPools.addHealthCheck" ,	"compute.targetPools.addInstance" ,	"compute.targetPools.create" ,	"compute.targetPools.delete" ,	
+	"compute.targetPools.get" ,	"compute.targetPools.list" ,	"compute.targetPools.removeHealthCheck" ,	"compute.targetPools.removeInstance" ,	"compute.targetPools.update" ,	
+	"compute.targetPools.use" ,	"compute.targetSslProxies.create" ,	"compute.targetSslProxies.delete" ,	"compute.targetSslProxies.get" ,	"compute.targetSslProxies.list" ,	
+	"compute.targetSslProxies.setBackendService" ,	"compute.targetSslProxies.setProxyHeader" ,	"compute.targetSslProxies.setSslCertificates" ,	"compute.targetSslProxies.use" ,	
+	"compute.targetTcpProxies.create" ,	"compute.targetTcpProxies.delete" ,	"compute.targetTcpProxies.get" ,	"compute.targetTcpProxies.list" ,	"compute.targetTcpProxies.update" ,
+	"compute.targetTcpProxies.use" ,	"compute.targetVpnGateways.create" ,	"compute.targetVpnGateways.delete" ,	"compute.targetVpnGateways.get" ,	
+	"compute.targetVpnGateways.list" ,	"compute.targetVpnGateways.setLabels" ,	"compute.targetVpnGateways.use" ,	"compute.urlMaps.create" ,	"compute.urlMaps.delete" ,	
+	"compute.urlMaps.get" ,	"compute.urlMaps.invalidateCache" ,	"compute.urlMaps.list" ,	"compute.urlMaps.update" ,	"compute.urlMaps.use" ,	"compute.urlMaps.validate" ,	
+	"compute.vpnGateways.create" ,	"compute.vpnGateways.delete" ,	"compute.vpnGateways.get" ,	"compute.vpnGateways.list" ,	"compute.vpnGateways.setLabels" ,	
+	"compute.vpnGateways.use" ,	"compute.vpnTunnels.create" ,	"compute.vpnTunnels.delete" ,	"compute.vpnTunnels.get" ,	"compute.vpnTunnels.list" ,	
+	"compute.vpnTunnels.setLabels" ,	"compute.zoneOperations.get" ,	"compute.zoneOperations.list" ,	"compute.zones.get" ,	"compute.zones.list" ,	
+	"resourcemanager.projects.get" ,	"resourcemanager.projects.list" ,	"servicenetworking.operations.get" ,	"servicenetworking.services.addPeering" ,	
+	"servicenetworking.services.get" ,	"serviceusage.quotas.get" ,	"serviceusage.services.get" ,	"serviceusage.services.list" ,	"compute.acceleratorTypes.get" ,	
+	"compute.acceleratorTypes.list" ,	"compute.autoscalers.create" ,	"compute.autoscalers.delete" ,	"compute.autoscalers.update" ,	"compute.diskTypes.get" ,	
+	"compute.diskTypes.list" ,	"compute.disks.create" ,	"compute.disks.createSnapshot" ,	"compute.disks.delete" ,	"compute.disks.get" ,	"compute.disks.list" ,	
+	"compute.disks.resize" ,	"compute.disks.setLabels" ,	"compute.disks.update" ,	"compute.disks.use" ,	"compute.disks.useReadOnly" ,	"compute.images.get" ,	
+	"compute.images.getFromFamily" ,	"compute.images.list" ,	"compute.images.useReadOnly" ,	"compute.instanceGroupManagers.create" ,	"compute.instanceGroupManagers.delete" ,
+	"compute.instanceGroups.create" ,	"compute.instanceGroups.delete" ,	"compute.instanceTemplates.create" ,	"compute.instanceTemplates.delete" ,	
+	"compute.instanceTemplates.get" ,	"compute.instanceTemplates.getIamPolicy" ,	"compute.instanceTemplates.list" ,	"compute.instanceTemplates.setIamPolicy" ,	
+	"compute.instanceTemplates.useReadOnly" ,	"compute.instances.addAccessConfig" ,	"compute.instances.addMaintenancePolicies" ,	"compute.instances.attachDisk" ,	
+	"compute.instances.create" ,	"compute.instances.delete" ,	"compute.instances.deleteAccessConfig" ,	"compute.instances.detachDisk" ,	"compute.instances.getIamPolicy" ,
+	"compute.instances.getShieldedInstanceIdentity" ,	"compute.instances.getShieldedVmIdentity" ,	"compute.instances.osAdminLogin" ,	"compute.instances.osLogin" ,	
+	"compute.instances.removeMaintenancePolicies" ,	"compute.instances.reset" ,	"compute.instances.resume" ,	"compute.instances.setDeletionProtection" ,
+	"compute.instances.setDiskAutoDelete" ,	"compute.instances.setIamPolicy" ,	"compute.instances.setLabels" ,	"compute.instances.setMachineResources" ,	
+	"compute.instances.setMachineType" ,	"compute.instances.setMetadata" ,	"compute.instances.setMinCpuPlatform" ,	"compute.instances.setScheduling" ,	
+	"compute.instances.setServiceAccount" ,	"compute.instances.setShieldedInstanceIntegrityPolicy" ,	"compute.instances.setShieldedVmIntegrityPolicy" ,	
+	"compute.instances.setTags" ,	"compute.instances.start" ,	"compute.instances.startWithEncryptionKey" ,	"compute.instances.stop" ,	"compute.instances.suspend" ,	
+	"compute.instances.update" ,	"compute.instances.updateAccessConfig" ,	"compute.instances.updateDisplayDevice" ,	"compute.instances.updateNetworkInterface" ,	
+	"compute.instances.updateShieldedInstanceConfig" ,	"compute.instances.updateShieldedVmConfig" ,	"compute.licenses.get" ,	"compute.licenses.list" ,	
+	"compute.machineTypes.get" ,	"compute.machineTypes.list" ,	"compute.networkEndpointGroups.attachNetworkEndpoints" ,	"compute.networkEndpointGroups.create" ,	
+	"compute.networkEndpointGroups.delete" ,	"compute.networkEndpointGroups.detachNetworkEndpoints" ,	"compute.networkEndpointGroups.getIamPolicy" ,	
+	"compute.networkEndpointGroups.setIamPolicy" ,	"compute.reservations.get" ,	"compute.reservations.list" };
+	RSRC:  { ANY ,"example.com" ,"project_1" ,"project_2" ,"instance_a" ,"instance_b" };
+	RH : { ANY ,Resources ,Projects ,Organization };
+
+	
+	RBACGCP : RBACGCP ( MEMBER ,ROLE ,PRMS ,RSRC ,RH );
+	
+	
+ASSIGN
+	next (MEMBER) := MEMBER ;
+	next (ROLE) := ROLE ;
+	next (PRMS) := PRMS ;
+	next (RSRC) := RSRC ;
+	next (RH) := RH ;
+	
+
+MODULE RBACGCP ( MEMBER ,ROLE ,PRMS ,RSRC ,RH )
+VAR
+	decision : {Grant, Deny};
+ASSIGN
+	init (decision) := Deny ;
+	next (decision) := case
+
+	----- "bob@example.com" -----
+	(MEMBER = "bob@example.com" | MEMBER = ANY) & (ROLE = "roles/compute.networkAdmin" | ROLE = ANY) & 
+	(RSRC = "example.com" | RSRC = "project_1" | RSRC = "project_2" | RSRC = "instance_a" | RSRC = "instance_b" | RSRC = ANY) & 
+	(RH = Organization | RH = Projects | RH = Resources | RH = ANY) &
+--	Permissions of "roles/compute.networkAdmin":
+	(PRMS = "compute.addresses.create" | PRMS = "compute.addresses.createInternal" | PRMS = "compute.addresses.delete" | 	PRMS = "compute.addresses.deleteInternal" | 	
+	PRMS = "compute.addresses.get" | 	PRMS = "compute.addresses.list" | 	PRMS = "compute.addresses.setLabels" | 	PRMS = "compute.addresses.use" | 	
+	PRMS = "compute.addresses.useInternal" | 	PRMS = "compute.autoscalers.get" | 	PRMS = "compute.autoscalers.list" | 	PRMS = "compute.backendBuckets.create" | 	
+	PRMS = "compute.backendBuckets.delete" | 	PRMS = "compute.backendBuckets.get" | 	PRMS = "compute.backendBuckets.list" | 	PRMS = "compute.backendBuckets.update" | 	
+	PRMS = "compute.backendBuckets.use" | 	PRMS = "compute.backendServices.create" | 	PRMS = "compute.backendServices.delete" | 	PRMS = "compute.backendServices.get" | 	
+	PRMS = "compute.backendServices.list" | 	PRMS = "compute.backendServices.setSecurityPolicy" | 	PRMS = "compute.backendServices.update" | 	
+	PRMS = "compute.backendServices.use" | 	PRMS = "compute.firewalls.get" | 	PRMS = "compute.firewalls.list" | 	PRMS = "compute.forwardingRules.create" | 	
+	PRMS = "compute.forwardingRules.delete" | 	PRMS = "compute.forwardingRules.get" | 	PRMS = "compute.forwardingRules.list" | 	PRMS = "compute.forwardingRules.setLabels" | 	
+	PRMS = "compute.forwardingRules.setTarget" | 	PRMS = "compute.globalAddresses.create" | 	PRMS = "compute.globalAddresses.createInternal" | 	
+	PRMS = "compute.globalAddresses.delete" | 	PRMS = "compute.globalAddresses.deleteInternal" | 	PRMS = "compute.globalAddresses.get" | 	PRMS = "compute.globalAddresses.list" | 
+	PRMS = "compute.globalAddresses.setLabels" | 	PRMS = "compute.globalAddresses.use" | 	PRMS = "compute.globalForwardingRules.create" | 	
+	PRMS = "compute.globalForwardingRules.delete" | 	PRMS = "compute.globalForwardingRules.get" | 	PRMS = "compute.globalForwardingRules.list" | 	
+	PRMS = "compute.globalForwardingRules.setLabels" | 	PRMS = "compute.globalForwardingRules.setTarget" | 	PRMS = "compute.globalOperations.get" | 	
+	PRMS = "compute.globalOperations.list" | 	PRMS = "compute.healthChecks.create" | 	PRMS = "compute.healthChecks.delete" | 	PRMS = "compute.healthChecks.get" | 	
+	PRMS = "compute.healthChecks.list" | 	PRMS = "compute.healthChecks.update" | 	PRMS = "compute.healthChecks.use" | 	PRMS = "compute.healthChecks.useReadOnly" | 	
+	PRMS = "compute.httpHealthChecks.create" | 	PRMS = "compute.httpHealthChecks.delete" | 	PRMS = "compute.httpHealthChecks.get" | 	PRMS = "compute.httpHealthChecks.list" | 
+	PRMS = "compute.httpHealthChecks.update" | 	PRMS = "compute.httpHealthChecks.use" | 	PRMS = "compute.httpHealthChecks.useReadOnly" | 	
+	PRMS = "compute.httpsHealthChecks.create" | 	PRMS = "compute.httpsHealthChecks.delete" | 	PRMS = "compute.httpsHealthChecks.get" | 	
+	PRMS = "compute.httpsHealthChecks.list" | 	PRMS = "compute.httpsHealthChecks.update" | 	PRMS = "compute.httpsHealthChecks.use" | 	
+	PRMS = "compute.httpsHealthChecks.useReadOnly" | 	PRMS = "compute.instanceGroupManagers.get" | 	PRMS = "compute.instanceGroupManagers.list" | 	
+	PRMS = "compute.instanceGroupManagers.update" | 	PRMS = "compute.instanceGroupManagers.use" | 	PRMS = "compute.instanceGroups.get" | 	PRMS = "compute.instanceGroups.list" |
+ 	PRMS = "compute.instanceGroups.update" | 	PRMS = "compute.instanceGroups.use" | 	PRMS = "compute.instances.get" | 	PRMS = "compute.instances.getGuestAttributes" | 	
+	PRMS = "compute.instances.getSerialPortOutput" | 	PRMS = "compute.instances.list" | 	PRMS = "compute.instances.listReferrers" | 	PRMS = "compute.instances.use" | 	
+	PRMS = "compute.interconnectAttachments.create" | 	PRMS = "compute.interconnectAttachments.delete" | 	PRMS = "compute.interconnectAttachments.get" | 
+	PRMS = "compute.interconnectAttachments.list" | 	PRMS = "compute.interconnectAttachments.setLabels" | 	PRMS = "compute.interconnectAttachments.update" | 
+	PRMS = "compute.interconnectAttachments.use" | 	PRMS = "compute.interconnectLocations.get" | 	PRMS = "compute.interconnectLocations.list" | 
+	PRMS = "compute.interconnects.create" | 	PRMS = "compute.interconnects.delete" | 	PRMS = "compute.interconnects.get" | 	PRMS = "compute.interconnects.list" | 
+	PRMS = "compute.interconnects.setLabels" | 	PRMS = "compute.interconnects.update" | 	PRMS = "compute.interconnects.use" | 	PRMS = "compute.networkEndpointGroups.get" | 
+	PRMS = "compute.networkEndpointGroups.list" | 	PRMS = "compute.networkEndpointGroups.use" | 	PRMS = "compute.networks.addPeering" | 	PRMS = "compute.networks.create" | 
+	PRMS = "compute.networks.delete" | 	PRMS = "compute.networks.get" | 	PRMS = "compute.networks.list" | 	PRMS = "compute.networks.removePeering" | 	
+	PRMS = "compute.networks.switchToCustomMode" | 	PRMS = "compute.networks.update" | 	PRMS = "compute.networks.updatePeering" | 	PRMS = "compute.networks.updatePolicy" | 	
+	PRMS = "compute.networks.use" | 	PRMS = "compute.networks.useExternalIp" | 	PRMS = "compute.projects.get" | 	PRMS = "compute.regionBackendServices.create" | 	
+	PRMS = "compute.regionBackendServices.delete" | 	PRMS = "compute.regionBackendServices.get" | 	PRMS = "compute.regionBackendServices.list" | 
+	PRMS = "compute.regionBackendServices.setSecurityPolicy" | 	PRMS = "compute.regionBackendServices.update" | 	PRMS = "compute.regionBackendServices.use" | 
+	PRMS = "compute.regionOperations.get" | 	PRMS = "compute.regionOperations.list" | 	PRMS = "compute.regions.get" | 	PRMS = "compute.regions.list" | 
+	PRMS = "compute.routers.create" | 	PRMS = "compute.routers.delete" | 	PRMS = "compute.routers.get" | 	PRMS = "compute.routers.list" | 	PRMS = "compute.routers.update" | 	
+	PRMS = "compute.routers.use" | 	PRMS = "compute.routes.create" | 	PRMS = "compute.routes.delete" | 	PRMS = "compute.routes.get" | 	PRMS = "compute.routes.list" | 
+	PRMS = "compute.securityPolicies.get" | 	PRMS = "compute.securityPolicies.list" | 	PRMS = "compute.securityPolicies.use" | 	PRMS = "compute.sslCertificates.get" | 
+	PRMS = "compute.sslCertificates.list" | 	PRMS = "compute.sslPolicies.create" | 	PRMS = "compute.sslPolicies.delete" | 	PRMS = "compute.sslPolicies.get" | 
+	PRMS = "compute.sslPolicies.list" | 	PRMS = "compute.sslPolicies.listAvailableFeatures" | 	PRMS = "compute.sslPolicies.update" | 	PRMS = "compute.sslPolicies.use" | 	
+	PRMS = "compute.subnetworks.create" | 	PRMS = "compute.subnetworks.delete" | 	PRMS = "compute.subnetworks.expandIpCidrRange" | 	PRMS = "compute.subnetworks.get" | 
+	PRMS = "compute.subnetworks.getIamPolicy" | 	PRMS = "compute.subnetworks.list" | 	PRMS = "compute.subnetworks.update" | 	PRMS = "compute.subnetworks.use" | 
+	PRMS = "compute.subnetworks.useExternalIp" | 	PRMS = "compute.targetHttpProxies.create" | 	PRMS = "compute.targetHttpProxies.delete" | 	
+	PRMS = "compute.targetHttpProxies.get" | 	PRMS = "compute.targetHttpProxies.list" | 	PRMS = "compute.targetHttpProxies.setUrlMap" | 	PRMS = "compute.targetHttpProxies.use" | 
+	PRMS = "compute.targetHttpsProxies.create" | 	PRMS = "compute.targetHttpsProxies.delete" | 	PRMS = "compute.targetHttpsProxies.get" | 	
+	PRMS = "compute.targetHttpsProxies.list" | 	PRMS = "compute.targetHttpsProxies.setSslCertificates" | 	PRMS = "compute.targetHttpsProxies.setSslPolicy" | 	
+	PRMS = "compute.targetHttpsProxies.setUrlMap" | 	PRMS = "compute.targetHttpsProxies.use" | 	PRMS = "compute.targetInstances.create" | 	
+	PRMS = "compute.targetInstances.delete" | 	PRMS = "compute.targetInstances.get" | 	PRMS = "compute.targetInstances.list" | 	PRMS = "compute.targetInstances.use" | 
+	PRMS = "compute.targetPools.addHealthCheck" | 	PRMS = "compute.targetPools.addInstance" | 	PRMS = "compute.targetPools.create" | 	PRMS = "compute.targetPools.delete" | 
+	PRMS = "compute.targetPools.get" | 	PRMS = "compute.targetPools.list" | 	PRMS = "compute.targetPools.removeHealthCheck" | 	PRMS = "compute.targetPools.removeInstance" | 
+	PRMS = "compute.targetPools.update" | 	PRMS = "compute.targetPools.use" | 	PRMS = "compute.targetSslProxies.create" | 	PRMS = "compute.targetSslProxies.delete" | 	
+	PRMS = "compute.targetSslProxies.get" | 	PRMS = "compute.targetSslProxies.list" | 	PRMS = "compute.targetSslProxies.setBackendService" | 	
+	PRMS = "compute.targetSslProxies.setProxyHeader" | 	PRMS = "compute.targetSslProxies.setSslCertificates" | 	PRMS = "compute.targetSslProxies.use" | 	
+	PRMS = "compute.targetTcpProxies.create" | 	PRMS = "compute.targetTcpProxies.delete" | 	PRMS = "compute.targetTcpProxies.get" | 	PRMS = "compute.targetTcpProxies.list" | 	
+	PRMS = "compute.targetTcpProxies.update" | 	PRMS = "compute.targetTcpProxies.use" | 	PRMS = "compute.targetVpnGateways.create" | 	PRMS = "compute.targetVpnGateways.delete" |
+ 	PRMS = "compute.targetVpnGateways.get" | 	PRMS = "compute.targetVpnGateways.list" | 	PRMS = "compute.targetVpnGateways.setLabels" | 	PRMS = "compute.targetVpnGateways.use" | 
+	PRMS = "compute.urlMaps.create" | 	PRMS = "compute.urlMaps.delete" | 	PRMS = "compute.urlMaps.get" | 	PRMS = "compute.urlMaps.invalidateCache" | 	PRMS = "compute.urlMaps.list" |
+ 	PRMS = "compute.urlMaps.update" | 	PRMS = "compute.urlMaps.use" | 	PRMS = "compute.urlMaps.validate" | 	PRMS = "compute.vpnGateways.create" | 	
+	PRMS = "compute.vpnGateways.delete" | 	PRMS = "compute.vpnGateways.get" | 	PRMS = "compute.vpnGateways.list" | 	PRMS = "compute.vpnGateways.setLabels" | 	
+	PRMS = "compute.vpnGateways.use" | 	PRMS = "compute.vpnTunnels.create" | 	PRMS = "compute.vpnTunnels.delete" | 	PRMS = "compute.vpnTunnels.get" | 	
+	PRMS = "compute.vpnTunnels.list" | 	PRMS = "compute.vpnTunnels.setLabels" | 	PRMS = "compute.zoneOperations.get" | 	PRMS = "compute.zoneOperations.list" | 	
+	PRMS = "compute.zones.get" | 	PRMS = "compute.zones.list" | 	PRMS = "resourcemanager.projects.get" | 	PRMS = "resourcemanager.projects.list" | 	
+	PRMS = "servicenetworking.operations.get" | 	PRMS = "servicenetworking.services.addPeering" | 	PRMS = "servicenetworking.services.get" | 	PRMS = "serviceusage.quotas.get" | 
+	PRMS = "serviceusage.services.get" | PRMS = "serviceusage.services.list" | PRMS = ANY) : Grant ;
+	
+	----- "alice@example.com" -----
+	(MEMBER = "alice@example.com" | MEMBER = ANY) & (ROLE = "roles/compute.instanceAdmin" | ROLE = ANY) & 
+	(RSRC = "project_2" | RSRC = "instance_b" | RSRC = ANY) &  (RH = Projects | RH = Resources | RH = ANY) &
+--	Permissions of "roles/compute.instanceAdmin":	
+	(PRMS = "compute.acceleratorTypes.get" | 	PRMS = "compute.acceleratorTypes.list" | 	PRMS = "compute.addresses.get" | 	PRMS = "compute.addresses.list" | 	
+	PRMS = "compute.addresses.use" | 	PRMS = "compute.autoscalers.create" | 	PRMS = "compute.autoscalers.delete" | 	PRMS = "compute.autoscalers.get" | 	
+	PRMS = "compute.autoscalers.list" | 	PRMS = "compute.autoscalers.update" | 	PRMS = "compute.diskTypes.get" | 	PRMS = "compute.diskTypes.list" | 	
+	PRMS = "compute.disks.create" | 	PRMS = "compute.disks.createSnapshot" | 	PRMS = "compute.disks.delete" | 	PRMS = "compute.disks.get" | 	
+	PRMS = "compute.disks.list" | 	PRMS = "compute.disks.resize" | 	PRMS = "compute.disks.setLabels" | 	PRMS = "compute.disks.update" | 	PRMS = "compute.disks.use" | 	
+	PRMS = "compute.disks.useReadOnly" | 	PRMS = "compute.globalAddresses.get" | 	PRMS = "compute.globalAddresses.list" | 	PRMS = "compute.globalAddresses.use" | 
+	PRMS = "compute.globalOperations.get" | 	PRMS = "compute.globalOperations.list" | 	PRMS = "compute.images.get" | 	PRMS = "compute.images.getFromFamily" | 	
+	PRMS = "compute.images.list" | 	PRMS = "compute.images.useReadOnly" | 	PRMS = "compute.instanceGroupManagers.create" | 	PRMS = "compute.instanceGroupManagers.delete" | 
+	PRMS = "compute.instanceGroupManagers.get" | 	PRMS = "compute.instanceGroupManagers.list" | 	PRMS = "compute.instanceGroupManagers.update" | 	
+	PRMS = "compute.instanceGroupManagers.use" | 	PRMS = "compute.instanceGroups.create" | 	PRMS = "compute.instanceGroups.delete" | 	PRMS = "compute.instanceGroups.get" | 
+	PRMS = "compute.instanceGroups.list" | 	PRMS = "compute.instanceGroups.update" | 	PRMS = "compute.instanceGroups.use" | 	PRMS = "compute.instanceTemplates.create" | 
+	PRMS = "compute.instanceTemplates.delete" | 	PRMS = "compute.instanceTemplates.get" | 	PRMS = "compute.instanceTemplates.getIamPolicy" | 	
+	PRMS = "compute.instanceTemplates.list" | 	PRMS = "compute.instanceTemplates.setIamPolicy" | 	PRMS = "compute.instanceTemplates.useReadOnly" | 	
+	PRMS = "compute.instances.addAccessConfig" | 	PRMS = "compute.instances.addMaintenancePolicies" | 	PRMS = "compute.instances.attachDisk" | 
+	PRMS = "compute.instances.create" | 	PRMS = "compute.instances.delete" | 	PRMS = "compute.instances.deleteAccessConfig" | 	PRMS = "compute.instances.detachDisk" | 	
+	PRMS = "compute.instances.get" | 	PRMS = "compute.instances.getGuestAttributes" | 	PRMS = "compute.instances.getIamPolicy" | 	
+	PRMS = "compute.instances.getSerialPortOutput" | 	PRMS = "compute.instances.getShieldedInstanceIdentity" | 	PRMS = "compute.instances.getShieldedVmIdentity" | 
+	PRMS = "compute.instances.list" | 	PRMS = "compute.instances.listReferrers" | 	PRMS = "compute.instances.osAdminLogin" | 	PRMS = "compute.instances.osLogin" | 	
+	PRMS = "compute.instances.removeMaintenancePolicies" | 	PRMS = "compute.instances.reset" | 	PRMS = "compute.instances.resume" | 	
+	PRMS = "compute.instances.setDeletionProtection" | 	PRMS = "compute.instances.setDiskAutoDelete" | 	PRMS = "compute.instances.setIamPolicy" | 	
+	PRMS = "compute.instances.setLabels" | 	PRMS = "compute.instances.setMachineResources" | 	PRMS = "compute.instances.setMachineType" | 	
+	PRMS = "compute.instances.setMetadata" | 	PRMS = "compute.instances.setMinCpuPlatform" | 	PRMS = "compute.instances.setScheduling" | 
+	PRMS = "compute.instances.setServiceAccount" | 	PRMS = "compute.instances.setShieldedInstanceIntegrityPolicy" | 	PRMS = "compute.instances.setShieldedVmIntegrityPolicy" | 	
+	PRMS = "compute.instances.setTags" | 	PRMS = "compute.instances.start" | 	PRMS = "compute.instances.setTags" | 	PRMS = "compute.instances.startWithEncryptionKey" | 	
+	PRMS = "compute.instances.stop" | 	PRMS = "compute.instances.suspend" | 	PRMS = "compute.instances.update" | 	PRMS = "compute.instances.updateAccessConfig" | 	
+	PRMS = "compute.instances.updateDisplayDevice" | 	PRMS = "compute.instances.updateNetworkInterface" | 	PRMS = "compute.instances.updateShieldedInstanceConfig" | 	
+	PRMS = "compute.instances.updateShieldedVmConfig" | 	PRMS = "compute.instances.use" | 	PRMS = "compute.licenses.get" | 	PRMS = "compute.licenses.list" | 	
+	PRMS = "compute.machineTypes.get" | 	PRMS = "compute.machineTypes.list" | 	PRMS = "compute.networkEndpointGroups.attachNetworkEndpoints" | 	
+	PRMS = "compute.networkEndpointGroups.create" | 	PRMS = "compute.networkEndpointGroups.delete" | 	PRMS = "compute.networkEndpointGroups.detachNetworkEndpoints" | 	
+	PRMS = "compute.networkEndpointGroups.get" | 	PRMS = "compute.networkEndpointGroups.getIamPolicy" | 	PRMS = "compute.networkEndpointGroups.list" | 
+	PRMS = "compute.networkEndpointGroups.setIamPolicy" | 	PRMS = "compute.networkEndpointGroups.use" | 	PRMS = "compute.networks.get" | 	PRMS = "compute.networks.list" | 
+	PRMS = "compute.networks.use" | 	PRMS = "compute.networks.useExternalIp" | 	PRMS = "compute.projects.get" | 	PRMS = "compute.regionOperations.get" | 	
+	PRMS = "compute.regionOperations.list" | 	PRMS = "compute.regions.get" | 	PRMS = "compute.regions.list" | 	PRMS = "compute.reservations.get" | 	
+	PRMS = "compute.reservations.list" | 	PRMS = "compute.subnetworks.get" | 	PRMS = "compute.subnetworks.list" | 	PRMS = "compute.subnetworks.use" | 	
+	PRMS = "compute.subnetworks.useExternalIp" | 	PRMS = "compute.targetPools.get" | 	PRMS = "compute.targetPools.list" | 	PRMS = "compute.zoneOperations.get" | 	
+	PRMS = "compute.zoneOperations.list" | 	PRMS = "compute.zones.get" | 	PRMS = "compute.zones.list" | 	PRMS = "resourcemanager.projects.get" | 	
+	PRMS = "resourcemanager.projects.list" | 	PRMS = "serviceusage.quotas.get" | 	PRMS = "serviceusage.services.get" | 	PRMS = "serviceusage.services.list" |  
+	PRMS = ANY)  : Grant ;
+
+	TRUE : Deny ;
+esac;
+
+
+-- Properties that check whether a certain member has a certain role on a certain resource  
+SPEC AG ((MEMBER = "bob@example.com") & (ROLE = "roles/compute.networkAdmin") & (PRMS = ANY) & (RSRC = "instance_a") & (RH = Resources) -> AF decision = Grant)  --> True 
+SPEC AG ((MEMBER = "alice@example.com") & (ROLE = "roles/compute.instanceAdmin") & (PRMS = ANY) & (RSRC = "instance_b") & (RH = Resources) -> AF decision = Grant)  --> True 
+
+-- Properties that check whether a certain member has a certain permission on a certain resource 
+SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = "compute.instances.create") & (RSRC = "project_1") & (RH = ANY) -> AF decision = Grant)  --> False 
+
+--Property that checks whether a certain member has a certain permission anywhere in the organization
+SPEC AG ((MEMBER = "bob@example.com") & (ROLE = ANY) & (PRMS = "compute.firewalls.get") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> True 
+SPEC AG ((MEMBER != "bob@example.com" & MEMBER != ANY) & (ROLE = ANY) & (PRMS = "compute.firewalls.get") & (RSRC = ANY) & (RH = ANY) -> AF decision = Deny)  --> True
+
+--Property that checks whether a certain member has any access authorization on a certain resource
+SPEC AG ((MEMBER = "bob@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "instance_a" | RSRC = "instance_b") & (RH = ANY) -> AF decision = Grant)  --> True
+SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Deny)  --> True
+
+--Property that checks whether a certain role has been assigned to anyone on a certain resource
+SPEC AG ((MEMBER = ANY) & (ROLE = "roles/compute.networkAdmin" | ROLE = "roles/compute.instanceAdmin") & (PRMS = ANY) & (RSRC = "instance_a") & (RH = ANY) -> AF decision = Grant)  --> False
+SPEC AG ((MEMBER = ANY) & (ROLE = "roles/compute.networkAdmin" | ROLE = "roles/compute.instanceAdmin") & (PRMS = ANY) & (RSRC = "instance_b") & (RH = ANY) -> AF decision = Grant)  --> True
+
+--Property that checks whether a certain permission has been assigned to anyone on a certain resource
+SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "compute.instances.create") & (RSRC = "project_1") & (RH = ANY) -> AF decision = Grant)  --> False 
+
+--Property that checks whether a certain member has any access authorization (i.e. any role or permission) on a certain resource
+SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "instance_a") & (RH = ANY) -> AF decision = Deny)  --> True
+
+--Property that checks whether a certain role includes a certain permission
+SPEC AG ((MEMBER = ANY) & (ROLE = "roles/compute.instanceAdmin") & (PRMS = "compute.routers.update") & (RSRC = ANY) & (RH = ANY) -> AF decision = Deny)  --> True 
+
+
