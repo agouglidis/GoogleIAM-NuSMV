@@ -24,9 +24,10 @@ ASSIGN
 	next (RH) := RH ;
 	
 
-MODULE RBACGCP ( MEMBER ,ROLE ,PRMS ,RSRC ,RH )
+MODULE RBACGCP (MEMBER, ROLE, PRMS, RSRC, RH)
 VAR
 	decision : {Grant, Deny};
+	
 ASSIGN
 	init (decision) := Deny;
 	next (decision) := case
@@ -69,20 +70,18 @@ esac;
 
 -- Specifications
 
--- Check whether a certain member with a certain role has ANY permission on a certain resource  
-
 -- Alice
 
 -- Check if Alice has eventually the role 'publisher' on 'project_a'. Evaluates to TRUE. Not included in the paper, but shows how to check a specification that holds.
 SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = "roles/pubsub.publisher") & (PRMS = ANY) & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> True
 
--- Check if $alice@gmail.com$ has eventually the publisher role on $project\_a$ at the $Projects$ hierarchy level. Evaluates too FALSE.
+-- Check if Alice has eventually the publisher role on 'project_a' at the 'Projects' hierarchy level. Evaluates too FALSE.
 SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = "roles/pubsub.publisher") & (PRMS = ANY) & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant) --> True
 
--- Check if $alice@gmail.com$ has eventually the permission $pubsub.topics.publish$ on $project\_a$ at $Projects$  hierarchy level. Evaluates too FALSE.
+-- Check if Alice has eventually the permission 'pubsub.topics.publish' on 'project_a' at 'Projects'  hierarchy level. Evaluates too FALSE.
 SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.publish") & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant) --> True
 
--- Check if $alice@gmail.com$ has eventually the permission $pubsub.topics.delete$ on $topic\_a$ at $Resources$ hierarchy level. Evaluates to FALSE.
+-- Check if Alice has eventually the permission 'pubsub.topics.delete' on 'topic_a' at 'Resources' hierarchy level. Evaluates to FALSE.
 SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant) --> True
 
 
@@ -90,33 +89,16 @@ SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.de
 
 -- List of additional specifications (Not included in the paper).
 
--- Bob
--- Check if bob has eventually the publisher role (ANY permission) on a certain resource
 --SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> True 
--- Check if bob has eventually the publisher role (ANY permission)
 --SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> True  
-
--- Check whether a certain member has a certain permission on a certain resource 
 --SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> True 
 --SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> True 
 --SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.publish") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> True
 --SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.publish") & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> False
 --SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> False
-
--- Check whether a certain member has a certain role anywhere in the organization
 --SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> True
-
--- Check whether a certain member has a certain permission anywhere in the organization
 --SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = ANY) & (RH = ANY) -> AF decision = Deny)  --> True
-
--- Check whether a certain member has any access authorization on a certain resource
 --SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "topic_a") & (RH = ANY) -> AF decision = Grant)  --> True
-
--- Check whether a certain role has been assigned to anyone on a certain resource
 --SPEC AG ((MEMBER = ANY) & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "project_a") & (RH = ANY) -> AF decision = Grant)  --> True
-
--- Check whether a certain permission has been assigned to anyone on a certain resource
 --SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "pubsub.topics.create") & (RSRC = "project_a") & (RH = ANY) -> AF decision = Grant)  --> True
-
--- Check whether a certain role includes a certain permission
 --SPEC AG ((MEMBER = ANY) & (ROLE = "roles/pubsub.publisher") & (PRMS = "pubsub.topics.create") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> True
