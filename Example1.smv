@@ -3,14 +3,14 @@
 MODULE main
 
 VAR
-	MEMBER : { ANY ,"bob@gmail.com" ,"alice@gmail.com" };
-	ROLE : { ANY ,"roles/pubsub.editor" ,"roles/pubsub.publisher" };
-	PRMS : { ANY ,"pubsub.topics.publish" ,"pubsub.topics.create" ,"pubsub.topics.delete" ,"pubsub.topics.get" ,"pubsub.topics.list" ,"pubsub.topics.update" ,"pubsub.topics.updateTag" ,
+	MEMBER : {ANY ,"bob@gmail.com" ,"alice@gmail.com"};
+	ROLE : {ANY ,"roles/pubsub.editor" ,"roles/pubsub.publisher"};
+	PRMS : {ANY ,"pubsub.topics.publish" ,"pubsub.topics.create" ,"pubsub.topics.delete" ,"pubsub.topics.get" ,"pubsub.topics.list" ,"pubsub.topics.update" ,"pubsub.topics.updateTag" ,
 	 "pubsub.topics.attachSubscription" ,"pubsub.snapshots.create" ,"pubsub.snapshots.delete" ,"pubsub.snapshots.get" ,"pubsub.snapshots.list" ,"pubsub.snapshots.seek" ,
 	 "pubsub.snapshots.update" ,"pubsub.subscriptions.consume" ,"pubsub.subscriptions.create" ,"pubsub.subscriptions.delete" ,"pubsub.subscriptions.get" ,"pubsub.subscriptions.list" ,
-	 "pubsub.subscriptions.update" ,"resourcemanager.projects.get" ,"serviceusage.quotas.get" ,"serviceusage.services.get" ,"serviceusage.services.list" };
-	RSRC:  { ANY ,"project_a" ,"topic_a" };
-	RH : { ANY ,Resources ,Projects ,Organization };
+	 "pubsub.subscriptions.update" ,"resourcemanager.projects.get" ,"serviceusage.quotas.get" ,"serviceusage.services.get" ,"serviceusage.services.list"};
+	RSRC:  {ANY ,"project_a" ,"topic_a"};
+	RH : {ANY ,Resources ,Projects ,Organization};
 	
 	
 	RBACGCP : RBACGCP (MEMBER, ROLE, PRMS, RSRC, RH);
@@ -28,7 +28,7 @@ MODULE RBACGCP ( MEMBER ,ROLE ,PRMS ,RSRC ,RH )
 VAR
 	decision : {Grant, Deny};
 ASSIGN
-	init (decision) := Deny ;
+	init (decision) := Deny;
 	next (decision) := case
 
 -- Definition of policies
@@ -63,7 +63,7 @@ ASSIGN
 	(RSRC = "topic_a" | RSRC = ANY) & (RH = Resources | RH = ANY) : Grant ;
 
 	-- Default decision
-	TRUE : Deny ;
+	TRUE : Deny;
 esac;
 
 
@@ -113,14 +113,10 @@ SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.de
 --SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "topic_a") & (RH = ANY) -> AF decision = Grant)  --> True
 
 -- Check whether a certain role has been assigned to anyone on a certain resource
---SPEC AG ((MEMBER = ANY) & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "project_a") & (RH = ANY) -> AF decision = Grant)  --> True 
+--SPEC AG ((MEMBER = ANY) & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "project_a") & (RH = ANY) -> AF decision = Grant)  --> True
 
 -- Check whether a certain permission has been assigned to anyone on a certain resource
---SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "pubsub.topics.create") & (RSRC = "project_a") & (RH = ANY) -> AF decision = Grant)  --> True 
+--SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "pubsub.topics.create") & (RSRC = "project_a") & (RH = ANY) -> AF decision = Grant)  --> True
 
 -- Check whether a certain role includes a certain permission
---SPEC AG ((MEMBER = ANY) & (ROLE = "roles/pubsub.publisher") & (PRMS = "pubsub.topics.create") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> True 
-
-
-
-
+--SPEC AG ((MEMBER = ANY) & (ROLE = "roles/pubsub.publisher") & (PRMS = "pubsub.topics.create") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> True
