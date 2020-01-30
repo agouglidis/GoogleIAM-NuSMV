@@ -55,7 +55,8 @@ ASSIGN
 	-- Policy for "alice@gmail.com"
 	
 	--pl_2
-	(MEMBER = "alice@gmail.com" | MEMBER = ANY) & (ROLE = "roles/pubsub.publisher" | ROLE = ANY) & (PRMS = "pubsub.topics.publish" | PRMS = ANY) & (RSRC = "topic_a" | RSRC = ANY) & (RH = Resources | RH = ANY) : Grant ;
+	(MEMBER = "alice@gmail.com" | MEMBER = ANY) & (ROLE = "roles/pubsub.publisher" | ROLE = ANY) & (PRMS = "pubsub.topics.publish" | PRMS = ANY) & 
+	(RSRC = "topic_a" | RSRC = ANY) & (RH = Resources | RH = ANY) : Grant ;
 
 	-- Default decision
 	TRUE : Deny;

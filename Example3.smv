@@ -3,81 +3,64 @@
 MODULE main
 
 VAR
-	MEMBER : { ANY ,"bob@example.com" ,"alice@example.com" };
-	ROLE : { ANY ,"roles/compute.networkAdmin" ,"roles/compute.instanceAdmin" };
-	PRMS : { ANY ,"compute.addresses.create" ,"compute.addresses.createInternal" ,"compute.addresses.delete" ,"compute.addresses.deleteInternal" ,"compute.addresses.get" ,
-	"compute.addresses.list" ,	"compute.addresses.setLabels" ,	"compute.addresses.use" ,	"compute.addresses.useInternal" ,	"compute.autoscalers.get" ,
-	"compute.autoscalers.list" ,	"compute.backendBuckets.create" ,	"compute.backendBuckets.delete" ,	"compute.backendBuckets.get" ,	"compute.backendBuckets.list" ,	
-	"compute.backendBuckets.update" ,	"compute.backendBuckets.use" ,	"compute.backendServices.create" ,	"compute.backendServices.delete" ,	"compute.backendServices.get" ,	
-	"compute.backendServices.list" ,	"compute.backendServices.setSecurityPolicy" ,	"compute.backendServices.update" ,	"compute.backendServices.use" ,	"compute.firewalls.get" ,
-	"compute.firewalls.list" ,	"compute.forwardingRules.create" ,	"compute.forwardingRules.delete" ,	"compute.forwardingRules.get" ,	"compute.forwardingRules.list" ,
-	"compute.forwardingRules.setLabels" ,	"compute.forwardingRules.setTarget" ,	"compute.globalAddresses.create" ,	"compute.globalAddresses.createInternal" ,	
-	"compute.globalAddresses.delete" ,	"compute.globalAddresses.deleteInternal" ,	"compute.globalAddresses.get" ,	"compute.globalAddresses.list" ,
-	"compute.globalAddresses.setLabels" ,	"compute.globalAddresses.use" ,	"compute.globalForwardingRules.create" ,	"compute.globalForwardingRules.delete" ,
-	"compute.globalForwardingRules.get" ,	"compute.globalForwardingRules.list" ,	"compute.globalForwardingRules.setLabels" ,	"compute.globalForwardingRules.setTarget" ,	
-	"compute.globalOperations.get" ,	"compute.globalOperations.list" ,	"compute.healthChecks.create" ,	"compute.healthChecks.delete" ,	"compute.healthChecks.get" , "compute.healthChecks.list" ,	"compute.healthChecks.update" ,	"compute.healthChecks.use" ,	"compute.healthChecks.useReadOnly" ,	"compute.httpHealthChecks.create" ,	
-	"compute.httpHealthChecks.delete" ,	"compute.httpHealthChecks.get" ,	"compute.httpHealthChecks.list" ,	"compute.httpHealthChecks.update" ,	"compute.httpHealthChecks.use" ,
-	"compute.httpHealthChecks.useReadOnly" ,	"compute.httpsHealthChecks.create" ,	"compute.httpsHealthChecks.delete" ,	"compute.httpsHealthChecks.get" ,	
-	"compute.httpsHealthChecks.list" ,	"compute.httpsHealthChecks.update" ,	"compute.httpsHealthChecks.use" ,	"compute.httpsHealthChecks.useReadOnly" ,	
-	"compute.instanceGroupManagers.get" ,	"compute.instanceGroupManagers.list" ,	"compute.instanceGroupManagers.update" ,	"compute.instanceGroupManagers.use" ,	
-	"compute.instanceGroups.get" ,	"compute.instanceGroups.list" ,	"compute.instanceGroups.update" ,	"compute.instanceGroups.use" ,	"compute.instances.get" ,	
-	"compute.instances.getGuestAttributes" ,	"compute.instances.getSerialPortOutput" ,	"compute.instances.list" ,	"compute.instances.listReferrers" ,	
-	"compute.instances.use" ,	"compute.interconnectAttachments.create" ,	"compute.interconnectAttachments.delete" ,	"compute.interconnectAttachments.get" ,	
-	"compute.interconnectAttachments.list" ,	"compute.interconnectAttachments.setLabels" ,	"compute.interconnectAttachments.update" ,	"compute.interconnectAttachments.use" ,	
-	"compute.interconnectLocations.get" ,	"compute.interconnectLocations.list" ,	"compute.interconnects.create" ,	"compute.interconnects.delete" ,	
-	"compute.interconnects.get" ,	"compute.interconnects.list" ,	"compute.interconnects.setLabels" ,	"compute.interconnects.update" ,	"compute.interconnects.use" ,	
-	"compute.networkEndpointGroups.get" ,	"compute.networkEndpointGroups.list" ,	"compute.networkEndpointGroups.use" ,	"compute.networks.addPeering" ,	"compute.networks.create" ,
-	"compute.networks.delete" ,	"compute.networks.get" ,	"compute.networks.list" ,	"compute.networks.removePeering" ,	"compute.networks.switchToCustomMode" ,	
-	"compute.networks.update" ,	"compute.networks.updatePeering" ,	"compute.networks.updatePolicy" ,	"compute.networks.use" ,	"compute.networks.useExternalIp" ,	
-	"compute.projects.get" ,	"compute.regionBackendServices.create" ,	"compute.regionBackendServices.delete" ,	"compute.regionBackendServices.get" ,	
-	"compute.regionBackendServices.list" , "compute.regionBackendServices.setSecurityPolicy" ,	"compute.regionBackendServices.update" ,	"compute.regionBackendServices.use" ,	
-	"compute.regionOperations.get" ,	"compute.regionOperations.list" ,	"compute.regions.get" ,	"compute.regions.list" ,	"compute.routers.create" ,	
-	"compute.routers.delete" ,	"compute.routers.get" ,	"compute.routers.list" ,	"compute.routers.update" ,	"compute.routers.use" ,	"compute.routes.create" ,	
-	"compute.routes.delete" ,	"compute.routes.get" ,	"compute.routes.list" ,	"compute.securityPolicies.get" ,	"compute.securityPolicies.list" ,	
-	"compute.securityPolicies.use" ,	"compute.sslCertificates.get" ,	"compute.sslCertificates.list" ,	"compute.sslPolicies.create" ,	"compute.sslPolicies.delete" ,	
-	"compute.sslPolicies.get" ,	"compute.sslPolicies.list" ,	"compute.sslPolicies.listAvailableFeatures" ,	"compute.sslPolicies.update" ,	"compute.sslPolicies.use" ,
-	"compute.subnetworks.create" ,	"compute.subnetworks.delete" ,	"compute.subnetworks.expandIpCidrRange" ,	"compute.subnetworks.get" ,	"compute.subnetworks.getIamPolicy" ,	
-	"compute.subnetworks.list" ,	"compute.subnetworks.update" ,	"compute.subnetworks.use" ,	"compute.subnetworks.useExternalIp" ,	"compute.targetHttpProxies.create" ,	
-	"compute.targetHttpProxies.delete" ,	"compute.targetHttpProxies.get" ,	"compute.targetHttpProxies.list" ,	"compute.targetHttpProxies.setUrlMap" ,	
-	"compute.targetHttpProxies.use" ,	"compute.targetHttpsProxies.create" ,	"compute.targetHttpsProxies.delete" ,	"compute.targetHttpsProxies.get" ,	
-	"compute.targetHttpsProxies.list" ,	"compute.targetHttpsProxies.setSslCertificates" ,	"compute.targetHttpsProxies.setSslPolicy" ,	"compute.targetHttpsProxies.setUrlMap" ,	
-	"compute.targetHttpsProxies.use" ,	"compute.targetInstances.create" ,	"compute.targetInstances.delete" ,	"compute.targetInstances.get" ,	"compute.targetInstances.list" ,	
-	"compute.targetInstances.use" ,	"compute.targetPools.addHealthCheck" ,	"compute.targetPools.addInstance" ,	"compute.targetPools.create" ,	"compute.targetPools.delete" ,	
-	"compute.targetPools.get" ,	"compute.targetPools.list" ,	"compute.targetPools.removeHealthCheck" ,	"compute.targetPools.removeInstance" ,	"compute.targetPools.update" ,	
-	"compute.targetPools.use" ,	"compute.targetSslProxies.create" ,	"compute.targetSslProxies.delete" ,	"compute.targetSslProxies.get" ,	"compute.targetSslProxies.list" ,	
-	"compute.targetSslProxies.setBackendService" ,	"compute.targetSslProxies.setProxyHeader" ,	"compute.targetSslProxies.setSslCertificates" ,	"compute.targetSslProxies.use" ,	
-	"compute.targetTcpProxies.create" ,	"compute.targetTcpProxies.delete" ,	"compute.targetTcpProxies.get" ,	"compute.targetTcpProxies.list" ,	"compute.targetTcpProxies.update" ,
-	"compute.targetTcpProxies.use" ,	"compute.targetVpnGateways.create" ,	"compute.targetVpnGateways.delete" ,	"compute.targetVpnGateways.get" ,	
-	"compute.targetVpnGateways.list" ,	"compute.targetVpnGateways.setLabels" ,	"compute.targetVpnGateways.use" ,	"compute.urlMaps.create" ,	"compute.urlMaps.delete" ,	
-	"compute.urlMaps.get" ,	"compute.urlMaps.invalidateCache" ,	"compute.urlMaps.list" ,	"compute.urlMaps.update" ,	"compute.urlMaps.use" ,	"compute.urlMaps.validate" ,	
-	"compute.vpnGateways.create" ,	"compute.vpnGateways.delete" ,	"compute.vpnGateways.get" ,	"compute.vpnGateways.list" ,	"compute.vpnGateways.setLabels" ,	
-	"compute.vpnGateways.use" ,	"compute.vpnTunnels.create" ,	"compute.vpnTunnels.delete" ,	"compute.vpnTunnels.get" ,	"compute.vpnTunnels.list" ,	
-	"compute.vpnTunnels.setLabels" ,	"compute.zoneOperations.get" ,	"compute.zoneOperations.list" ,	"compute.zones.get" ,	"compute.zones.list" ,	
-	"resourcemanager.projects.get" ,	"resourcemanager.projects.list" ,	"servicenetworking.operations.get" ,	"servicenetworking.services.addPeering" ,	
-	"servicenetworking.services.get" ,	"serviceusage.quotas.get" ,	"serviceusage.services.get" ,	"serviceusage.services.list" ,	"compute.acceleratorTypes.get" ,	
-	"compute.acceleratorTypes.list" ,	"compute.autoscalers.create" ,	"compute.autoscalers.delete" ,	"compute.autoscalers.update" ,	"compute.diskTypes.get" ,	
-	"compute.diskTypes.list" ,	"compute.disks.create" ,	"compute.disks.createSnapshot" ,	"compute.disks.delete" ,	"compute.disks.get" ,	"compute.disks.list" ,	
-	"compute.disks.resize" ,	"compute.disks.setLabels" ,	"compute.disks.update" ,	"compute.disks.use" ,	"compute.disks.useReadOnly" ,	"compute.images.get" ,	
-	"compute.images.getFromFamily" ,	"compute.images.list" ,	"compute.images.useReadOnly" ,	"compute.instanceGroupManagers.create" ,	"compute.instanceGroupManagers.delete" ,
-	"compute.instanceGroups.create" ,	"compute.instanceGroups.delete" ,	"compute.instanceTemplates.create" ,	"compute.instanceTemplates.delete" ,	
-	"compute.instanceTemplates.get" ,	"compute.instanceTemplates.getIamPolicy" ,	"compute.instanceTemplates.list" ,	"compute.instanceTemplates.setIamPolicy" ,	
-	"compute.instanceTemplates.useReadOnly" ,	"compute.instances.addAccessConfig" ,	"compute.instances.addMaintenancePolicies" ,	"compute.instances.attachDisk" ,	
-	"compute.instances.create" ,	"compute.instances.delete" ,	"compute.instances.deleteAccessConfig" ,	"compute.instances.detachDisk" ,	"compute.instances.getIamPolicy" ,
-	"compute.instances.getShieldedInstanceIdentity" ,	"compute.instances.getShieldedVmIdentity" ,	"compute.instances.osAdminLogin" ,	"compute.instances.osLogin" ,	
-	"compute.instances.removeMaintenancePolicies" ,	"compute.instances.reset" ,	"compute.instances.resume" ,	"compute.instances.setDeletionProtection" ,
-	"compute.instances.setDiskAutoDelete" ,	"compute.instances.setIamPolicy" ,	"compute.instances.setLabels" ,	"compute.instances.setMachineResources" ,	
-	"compute.instances.setMachineType" ,	"compute.instances.setMetadata" ,	"compute.instances.setMinCpuPlatform" ,	"compute.instances.setScheduling" ,	
-	"compute.instances.setServiceAccount" ,	"compute.instances.setShieldedInstanceIntegrityPolicy" ,	"compute.instances.setShieldedVmIntegrityPolicy" ,	
-	"compute.instances.setTags" ,	"compute.instances.start" ,	"compute.instances.startWithEncryptionKey" ,	"compute.instances.stop" ,	"compute.instances.suspend" ,	
-	"compute.instances.update" ,	"compute.instances.updateAccessConfig" ,	"compute.instances.updateDisplayDevice" ,	"compute.instances.updateNetworkInterface" ,	
-	"compute.instances.updateShieldedInstanceConfig" ,	"compute.instances.updateShieldedVmConfig" ,	"compute.licenses.get" ,	"compute.licenses.list" ,	
-	"compute.machineTypes.get" ,	"compute.machineTypes.list" ,	"compute.networkEndpointGroups.attachNetworkEndpoints" ,	"compute.networkEndpointGroups.create" ,	
-	"compute.networkEndpointGroups.delete" ,	"compute.networkEndpointGroups.detachNetworkEndpoints" ,	"compute.networkEndpointGroups.getIamPolicy" ,	
-	"compute.networkEndpointGroups.setIamPolicy" ,	"compute.reservations.get" ,	"compute.reservations.list" };
-	RSRC:  { ANY ,"example.com" ,"project_1" ,"project_2" ,"instance_a" ,"instance_b" };
-	RH : { ANY ,Resources ,Projects ,Organization };
+	MEMBER : {ANY, "bob@example.com", "alice@example.com" };
+	ROLE : {ANY, "roles/compute.networkAdmin", "roles/compute.instanceAdmin"};
+	PRMS : {ANY, "compute.addresses.create", "compute.addresses.createInternal", "compute.addresses.delete", "compute.addresses.deleteInternal", "compute.addresses.get", "compute.addresses.list", "compute.addresses.setLabels", "compute.addresses.use", "compute.addresses.useInternal", "compute.autoscalers.get",	"compute.autoscalers.list", "compute.backendBuckets.create", "compute.backendBuckets.delete", "compute.backendBuckets.get", "compute.backendBuckets.list", "compute.backendBuckets.update",	"compute.backendBuckets.use",	"compute.backendServices.create",	"compute.backendServices.delete",	"compute.backendServices.get", "compute.backendServices.list",	"compute.backendServices.setSecurityPolicy",	"compute.backendServices.update",	"compute.backendServices.use",	"compute.firewalls.get", "compute.firewalls.list",	"compute.forwardingRules.create",	"compute.forwardingRules.delete",	"compute.forwardingRules.get",	"compute.forwardingRules.list", "compute.forwardingRules.setLabels", "compute.forwardingRules.setTarget",	"compute.globalAddresses.create", "compute.globalAddresses.createInternal", "compute.globalAddresses.delete",	"compute.globalAddresses.deleteInternal",	"compute.globalAddresses.get",	"compute.globalAddresses.list", "compute.globalAddresses.setLabels",	"compute.globalAddresses.use",	"compute.globalForwardingRules.create",	"compute.globalForwardingRules.delete", "compute.globalForwardingRules.get",	"compute.globalForwardingRules.list",	"compute.globalForwardingRules.setLabels",	"compute.globalForwardingRules.setTarget", "compute.globalOperations.get",	"compute.globalOperations.list",	"compute.healthChecks.create",	"compute.healthChecks.delete",	"compute.healthChecks.get", "compute.healthChecks.list",	"compute.healthChecks.update",	"compute.healthChecks.use",	"compute.healthChecks.useReadOnly",	"compute.httpHealthChecks.create", "compute.httpHealthChecks.delete",	"compute.httpHealthChecks.get",	"compute.httpHealthChecks.list",	"compute.httpHealthChecks.update",	"compute.httpHealthChecks.use", "compute.httpHealthChecks.useReadOnly",	"compute.httpsHealthChecks.create",	"compute.httpsHealthChecks.delete",	"compute.httpsHealthChecks.get",	 "compute.httpsHealthChecks.list",	"compute.httpsHealthChecks.update",	"compute.httpsHealthChecks.use",	"compute.httpsHealthChecks.useReadOnly",	"compute.instanceGroupManagers.get",	"compute.instanceGroupManagers.list",	"compute.instanceGroupManagers.update",	"compute.instanceGroupManagers.use", "compute.instanceGroups.get",	"compute.instanceGroups.list",	"compute.instanceGroups.update",	"compute.instanceGroups.use",	"compute.instances.get", "compute.instances.getGuestAttributes",	"compute.instances.getSerialPortOutput", "compute.instances.list",	"compute.instances.listReferrers", "compute.instances.use",	"compute.interconnectAttachments.create",	"compute.interconnectAttachments.delete",	"compute.interconnectAttachments.get",	
+	"compute.interconnectAttachments.list",	"compute.interconnectAttachments.setLabels",	"compute.interconnectAttachments.update",	"compute.interconnectAttachments.use",	
+	"compute.interconnectLocations.get",	"compute.interconnectLocations.list",	"compute.interconnects.create",	"compute.interconnects.delete",	
+	"compute.interconnects.get",	"compute.interconnects.list",	"compute.interconnects.setLabels",	"compute.interconnects.update",	"compute.interconnects.use",	
+	"compute.networkEndpointGroups.get",	"compute.networkEndpointGroups.list",	"compute.networkEndpointGroups.use",	"compute.networks.addPeering",	"compute.networks.create",
+	"compute.networks.delete",	"compute.networks.get",	"compute.networks.list",	"compute.networks.removePeering",	"compute.networks.switchToCustomMode",	
+	"compute.networks.update",	"compute.networks.updatePeering",	"compute.networks.updatePolicy",	"compute.networks.use",	"compute.networks.useExternalIp",	
+	"compute.projects.get",	"compute.regionBackendServices.create",	"compute.regionBackendServices.delete",	"compute.regionBackendServices.get",	
+	"compute.regionBackendServices.list", "compute.regionBackendServices.setSecurityPolicy",	"compute.regionBackendServices.update",	"compute.regionBackendServices.use",	
+	"compute.regionOperations.get",	"compute.regionOperations.list",	"compute.regions.get",	"compute.regions.list",	"compute.routers.create",	
+	"compute.routers.delete",	"compute.routers.get",	"compute.routers.list",	"compute.routers.update",	"compute.routers.use",	"compute.routes.create",	
+	"compute.routes.delete",	"compute.routes.get",	"compute.routes.list",	"compute.securityPolicies.get",	"compute.securityPolicies.list",	
+	"compute.securityPolicies.use",	"compute.sslCertificates.get",	"compute.sslCertificates.list",	"compute.sslPolicies.create",	"compute.sslPolicies.delete",	
+	"compute.sslPolicies.get",	"compute.sslPolicies.list",	"compute.sslPolicies.listAvailableFeatures",	"compute.sslPolicies.update",	"compute.sslPolicies.use",
+	"compute.subnetworks.create",	"compute.subnetworks.delete",	"compute.subnetworks.expandIpCidrRange",	"compute.subnetworks.get",	"compute.subnetworks.getIamPolicy",	
+	"compute.subnetworks.list",	"compute.subnetworks.update",	"compute.subnetworks.use",	"compute.subnetworks.useExternalIp",	"compute.targetHttpProxies.create",	
+	"compute.targetHttpProxies.delete",	"compute.targetHttpProxies.get",	"compute.targetHttpProxies.list",	"compute.targetHttpProxies.setUrlMap",	
+	"compute.targetHttpProxies.use",	"compute.targetHttpsProxies.create",	"compute.targetHttpsProxies.delete",	"compute.targetHttpsProxies.get",	
+	"compute.targetHttpsProxies.list",	"compute.targetHttpsProxies.setSslCertificates",	"compute.targetHttpsProxies.setSslPolicy",	"compute.targetHttpsProxies.setUrlMap",	
+	"compute.targetHttpsProxies.use",	"compute.targetInstances.create",	"compute.targetInstances.delete",	"compute.targetInstances.get",	"compute.targetInstances.list",	
+	"compute.targetInstances.use",	"compute.targetPools.addHealthCheck",	"compute.targetPools.addInstance",	"compute.targetPools.create",	"compute.targetPools.delete",	
+	"compute.targetPools.get",	"compute.targetPools.list",	"compute.targetPools.removeHealthCheck",	"compute.targetPools.removeInstance",	"compute.targetPools.update",	
+	"compute.targetPools.use",	"compute.targetSslProxies.create",	"compute.targetSslProxies.delete",	"compute.targetSslProxies.get",	"compute.targetSslProxies.list",	
+	"compute.targetSslProxies.setBackendService",	"compute.targetSslProxies.setProxyHeader",	"compute.targetSslProxies.setSslCertificates",	"compute.targetSslProxies.use",	
+	"compute.targetTcpProxies.create",	"compute.targetTcpProxies.delete",	"compute.targetTcpProxies.get",	"compute.targetTcpProxies.list",	"compute.targetTcpProxies.update",
+	"compute.targetTcpProxies.use",	"compute.targetVpnGateways.create",	"compute.targetVpnGateways.delete",	"compute.targetVpnGateways.get",	
+	"compute.targetVpnGateways.list",	"compute.targetVpnGateways.setLabels",	"compute.targetVpnGateways.use",	"compute.urlMaps.create",	"compute.urlMaps.delete",	
+	"compute.urlMaps.get",	"compute.urlMaps.invalidateCache",	"compute.urlMaps.list",	"compute.urlMaps.update",	"compute.urlMaps.use",	"compute.urlMaps.validate",	
+	"compute.vpnGateways.create",	"compute.vpnGateways.delete",	"compute.vpnGateways.get",	"compute.vpnGateways.list",	"compute.vpnGateways.setLabels",	
+	"compute.vpnGateways.use",	"compute.vpnTunnels.create",	"compute.vpnTunnels.delete",	"compute.vpnTunnels.get",	"compute.vpnTunnels.list",	
+	"compute.vpnTunnels.setLabels",	"compute.zoneOperations.get",	"compute.zoneOperations.list",	"compute.zones.get",	"compute.zones.list",	
+	"resourcemanager.projects.get",	"resourcemanager.projects.list",	"servicenetworking.operations.get",	"servicenetworking.services.addPeering",	
+	"servicenetworking.services.get",	"serviceusage.quotas.get",	"serviceusage.services.get",	"serviceusage.services.list",	"compute.acceleratorTypes.get",	
+	"compute.acceleratorTypes.list",	"compute.autoscalers.create",	"compute.autoscalers.delete",	"compute.autoscalers.update",	"compute.diskTypes.get",	
+	"compute.diskTypes.list",	"compute.disks.create",	"compute.disks.createSnapshot",	"compute.disks.delete",	"compute.disks.get",	"compute.disks.list",	
+	"compute.disks.resize",	"compute.disks.setLabels",	"compute.disks.update",	"compute.disks.use",	"compute.disks.useReadOnly",	"compute.images.get",	
+	"compute.images.getFromFamily",	"compute.images.list",	"compute.images.useReadOnly",	"compute.instanceGroupManagers.create",	"compute.instanceGroupManagers.delete",
+	"compute.instanceGroups.create",	"compute.instanceGroups.delete",	"compute.instanceTemplates.create",	"compute.instanceTemplates.delete",	
+	"compute.instanceTemplates.get",	"compute.instanceTemplates.getIamPolicy",	"compute.instanceTemplates.list",	"compute.instanceTemplates.setIamPolicy",	
+	"compute.instanceTemplates.useReadOnly",	"compute.instances.addAccessConfig",	"compute.instances.addMaintenancePolicies",	"compute.instances.attachDisk",	
+	"compute.instances.create",	"compute.instances.delete",	"compute.instances.deleteAccessConfig",	"compute.instances.detachDisk",	"compute.instances.getIamPolicy",
+	"compute.instances.getShieldedInstanceIdentity",	"compute.instances.getShieldedVmIdentity",	"compute.instances.osAdminLogin",	"compute.instances.osLogin",	
+	"compute.instances.removeMaintenancePolicies",	"compute.instances.reset",	"compute.instances.resume",	"compute.instances.setDeletionProtection",
+	"compute.instances.setDiskAutoDelete",	"compute.instances.setIamPolicy",	"compute.instances.setLabels",	"compute.instances.setMachineResources",	
+	"compute.instances.setMachineType",	"compute.instances.setMetadata",	"compute.instances.setMinCpuPlatform",	"compute.instances.setScheduling",	
+	"compute.instances.setServiceAccount",	"compute.instances.setShieldedInstanceIntegrityPolicy",	"compute.instances.setShieldedVmIntegrityPolicy",	
+	"compute.instances.setTags",	"compute.instances.start",	"compute.instances.startWithEncryptionKey",	"compute.instances.stop",	"compute.instances.suspend",	
+	"compute.instances.update",	"compute.instances.updateAccessConfig",	"compute.instances.updateDisplayDevice",	"compute.instances.updateNetworkInterface",	
+	"compute.instances.updateShieldedInstanceConfig",	"compute.instances.updateShieldedVmConfig",	"compute.licenses.get",	"compute.licenses.list",	
+	"compute.machineTypes.get",	"compute.machineTypes.list",	"compute.networkEndpointGroups.attachNetworkEndpoints",	"compute.networkEndpointGroups.create",	
+	"compute.networkEndpointGroups.delete",	"compute.networkEndpointGroups.detachNetworkEndpoints",	"compute.networkEndpointGroups.getIamPolicy",	
+	"compute.networkEndpointGroups.setIamPolicy",	"compute.reservations.get", "compute.reservations.list"};
+	RSRC:  {ANY, "example.com", "project_1", "project_2", "instance_a", "instance_b"};
+	RH : {ANY, Resources, Projects, Organization};
 	
-	RBACGCP : RBACGCP ( MEMBER ,ROLE ,PRMS ,RSRC ,RH );
+	RBACGCP : RBACGCP (MEMBER, ROLE, PRMS, RSRC, RH);
 	
 ASSIGN
 	next (MEMBER) := MEMBER ;
@@ -86,12 +69,14 @@ ASSIGN
 	next (RSRC) := RSRC ;
 	next (RH) := RH ;
 
-MODULE RBACGCP ( MEMBER ,ROLE ,PRMS ,RSRC ,RH )
+MODULE RBACGCP ( MEMBER,ROLE,PRMS,RSRC,RH )
 VAR
 	decision : {Grant, Deny};
 ASSIGN
 	init (decision) := Deny;
 	next (decision) := case
+
+-- Definition of policies
 
 	----- "bob@example.com" -----
 	(MEMBER = "bob@example.com" | MEMBER = ANY) & (ROLE = "roles/compute.networkAdmin" | ROLE = ANY) &	(RSRC = "example.com" | RSRC = "project_1" | RSRC = "project_2" | RSRC = "instance_a" | RSRC = "instance_b" | RSRC = ANY) & 
@@ -207,6 +192,7 @@ ASSIGN
 	TRUE : Deny ;
 esac;
 
+-- Specifications
 
 -- Specification 1. Evaluates to FALSE.
 SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = "compute.instances.create") & (RSRC = "project_1") & (RH = ANY) -> AF decision = Grant) --> TRUE    
@@ -217,6 +203,9 @@ SPEC AG ((MEMBER = ANY) & (ROLE = "roles/compute.networkAdmin" | ROLE = "roles/c
 -- Specification 3. Evaluates to FALSE.
 SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "compute.instances.create") & (RSRC = "project_1") & (RH = ANY) -> AF decision = Grant) --> TRUE     
 
+
+-- **************************************************************************************
+
 -- Properties that check whether a certain member has a certain role on a certain resource  
 --SPEC AG ((MEMBER = "bob@example.com") & (ROLE = "roles/compute.networkAdmin") & (PRMS = ANY) & (RSRC = "instance_a") & (RH = Resources) -> AF decision = Grant)  --> True 
 --SPEC AG ((MEMBER = "alice@example.com") & (ROLE = "roles/compute.instanceAdmin") & (PRMS = ANY) & (RSRC = "instance_b") & (RH = Resources) -> AF decision = Grant)  --> True 
@@ -226,7 +215,7 @@ SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "compute.instances.create") & (
 
 --Property that checks whether a certain member has a certain permission anywhere in the organization
 --SPEC AG ((MEMBER = "bob@example.com") & (ROLE = ANY) & (PRMS = "compute.firewalls.get") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> True 
-SPEC AG ((MEMBER != "bob@example.com" & MEMBER != ANY) & (ROLE = ANY) & (PRMS = "compute.firewalls.get") & (RSRC = ANY) & (RH = ANY) -> AF decision = Deny)  --> True
+--SPEC AG ((MEMBER != "bob@example.com" & MEMBER != ANY) & (ROLE = ANY) & (PRMS = "compute.firewalls.get") & (RSRC = ANY) & (RH = ANY) -> AF decision = Deny)  --> True
 
 --Property that checks whether a certain member has any access authorization on a certain resource
 --SPEC AG ((MEMBER = "bob@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "instance_a" | RSRC = "instance_b") & (RH = ANY) -> AF decision = Grant)  --> True
