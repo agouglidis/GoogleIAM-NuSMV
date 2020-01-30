@@ -205,6 +205,7 @@ SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "compute.instances.create") & (
 
 
 -- **************************************************************************************
+-- List of additional specifications (Not included in the paper).
 
 -- Properties that check whether a certain member has a certain role on a certain resource  
 --SPEC AG ((MEMBER = "bob@example.com") & (ROLE = "roles/compute.networkAdmin") & (PRMS = ANY) & (RSRC = "instance_a") & (RH = Resources) -> AF decision = Grant)  --> True 

@@ -47,24 +47,24 @@ ASSIGN
 esac;
 
 
+-- Specifications
 
 -- Specification 1. Evaluates to FALSE.
-
 SPEC AG ((MEMBER = "data_uploaders@example.com") &  (ROLE = ANY) & (PRMS = "storage.objects.delete") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant) --> TRUE
 
 -- Specification 2. Evaluates to FALSE.
-
 SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Grant) --> TRUE  
 
 -- Specification 3. Evaluates to FALSE.
-
 SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "storage.objects.delete" | PRMS = "storage.objects.update" ) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Grant) --> TRUE
 
 -- Specification 4. Evaluates to FALSE.
-
 SPEC AG ((MEMBER != "alice@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.create") & (RSRC = ANY) & (RH = Resources) -> AF decision = Deny) --> TRUE
 
--- Other specifications
+
+
+-- **************************************************************************************
+-- List of additional specifications (Not included in the paper).
 
 -- Properties that check whether a certain member has a certain role on a certain resource  
 --SPEC AG ((MEMBER = "alice@example.com") & (ROLE = "roles/storage.objectAdmin") & (PRMS = ANY) & (RSRC = "upload_here") & (RH = Resources) -> AF decision = Grant)  --> True 
