@@ -18,7 +18,7 @@ ASSIGN
 	next (RSRC) := RSRC ;
 	next (RH) := RH ;
 	
-
+	
 MODULE RBACGCP (MEMBER, ROLE, PRMS, RSRC, RH)
 VAR
 	decision : {Grant, Deny};
@@ -27,36 +27,21 @@ ASSIGN
 	init (decision) := Deny;
 	next (decision) := case
 
--- Definition of policies
+	-- Definition of policies
 
 	-- Policies for "bob@gmail.com
 
 	-- pl_1
-	(MEMBER = "bob@gmail.com" | MEMBER = ANY) & (ROLE = "roles/pubsub.editor" | ROLE = ANY) & 
-	(PRMS = "pubsub.topics.publish" | PRMS = "pubsub.topics.create" | PRMS = "pubsub.topics.delete" | PRMS = "pubsub.topics.get" | PRMS = "pubsub.topics.list" | 
-	PRMS = "pubsub.topics.update" | PRMS = "pubsub.topics.updateTag" | PRMS = "pubsub.topics.attachSubscription" | PRMS = "pubsub.snapshots.create" | 
-	PRMS = "pubsub.snapshots.delete" | PRMS = "pubsub.snapshots.get" | PRMS = "pubsub.snapshots.list" | PRMS = "pubsub.snapshots.seek" | PRMS = "pubsub.subscriptions.get" | 
-	PRMS = "pubsub.snapshots.update" | PRMS = "pubsub.subscriptions.consume" | PRMS = "pubsub.subscriptions.create" | PRMS = "pubsub.subscriptions.delete" | 
-	PRMS = "pubsub.subscriptions.list" | PRMS = "pubsub.subscriptions.update" | PRMS = "resourcemanager.projects.get" | PRMS = "serviceusage.quotas.get" | 
-	PRMS = "serviceusage.services.get" | PRMS = "serviceusage.services.list" | PRMS = ANY) & (RSRC = "project_a" | RSRC = ANY) & 
-	(RH = Projects | RH = ANY) : Grant ;
+	(MEMBER = "bob@gmail.com" | MEMBER = ANY) & (ROLE = "roles/pubsub.editor" | ROLE = ANY) & (PRMS = "pubsub.topics.publish" | PRMS = "pubsub.topics.create" | PRMS = "pubsub.topics.delete" | PRMS = "pubsub.topics.get" | PRMS = "pubsub.topics.list" | PRMS = "pubsub.topics.update" | PRMS = "pubsub.topics.updateTag" | PRMS = "pubsub.topics.attachSubscription" | PRMS = "pubsub.snapshots.create" | PRMS = "pubsub.snapshots.delete" | PRMS = "pubsub.snapshots.get" | PRMS = "pubsub.snapshots.list" | PRMS = "pubsub.snapshots.seek" | PRMS = "pubsub.subscriptions.get" | PRMS = "pubsub.snapshots.update" | PRMS = "pubsub.subscriptions.consume" | PRMS = "pubsub.subscriptions.create" | PRMS = "pubsub.subscriptions.delete" | PRMS = "pubsub.subscriptions.list" | PRMS = "pubsub.subscriptions.update" | PRMS = "resourcemanager.projects.get" | PRMS = "serviceusage.quotas.get" | PRMS = "serviceusage.services.get" | PRMS = "serviceusage.services.list" | PRMS = ANY) & (RSRC = "project_a" | RSRC = ANY) & (RH = Projects | RH = ANY) : Grant ;
 
 	-- pl'_1
-	(MEMBER = "bob@gmail.com" | MEMBER = ANY) & (ROLE = "roles/pubsub.editor" | ROLE = ANY) & 
-	(PRMS = "pubsub.topics.publish" | PRMS = "pubsub.topics.create" | PRMS = "pubsub.topics.delete" | PRMS = "pubsub.topics.get" | PRMS = "pubsub.topics.list" | 
-	PRMS = "pubsub.topics.update" | PRMS = "pubsub.topics.updateTag" | PRMS = "pubsub.topics.attachSubscription" | PRMS = "pubsub.snapshots.create" | 
-	PRMS = "pubsub.snapshots.delete" | PRMS = "pubsub.snapshots.get" | PRMS = "pubsub.snapshots.list" | PRMS = "pubsub.snapshots.seek" | PRMS = "pubsub.subscriptions.get" | 
-	PRMS = "pubsub.snapshots.update" | PRMS = "pubsub.subscriptions.consume" | PRMS = "pubsub.subscriptions.create" | PRMS = "pubsub.subscriptions.delete" | 
-	PRMS = "pubsub.subscriptions.list" | PRMS = "pubsub.subscriptions.update" | PRMS = "resourcemanager.projects.get" | PRMS = "serviceusage.quotas.get" | 
-	PRMS = "serviceusage.services.get" | PRMS = "serviceusage.services.list" | PRMS = ANY) & (RSRC = "topic_a" | RSRC = ANY) & 
-	(RH = Resources | RH = ANY) : Grant ;
+	(MEMBER = "bob@gmail.com" | MEMBER = ANY) & (ROLE = "roles/pubsub.editor" | ROLE = ANY) & (PRMS = "pubsub.topics.publish" | PRMS = "pubsub.topics.create" | PRMS = "pubsub.topics.delete" | PRMS = "pubsub.topics.get" | PRMS = "pubsub.topics.list" | PRMS = "pubsub.topics.update" | PRMS = "pubsub.topics.updateTag" | PRMS = "pubsub.topics.attachSubscription" | PRMS = "pubsub.snapshots.create" | PRMS = "pubsub.snapshots.delete" | PRMS = "pubsub.snapshots.get" | PRMS = "pubsub.snapshots.list" | PRMS = "pubsub.snapshots.seek" | PRMS = "pubsub.subscriptions.get" | PRMS = "pubsub.snapshots.update" | PRMS = "pubsub.subscriptions.consume" | PRMS = "pubsub.subscriptions.create" | PRMS = "pubsub.subscriptions.delete" | PRMS = "pubsub.subscriptions.list" | PRMS = "pubsub.subscriptions.update" | PRMS = "resourcemanager.projects.get" | PRMS = "serviceusage.quotas.get" | PRMS = "serviceusage.services.get" | PRMS = "serviceusage.services.list" | PRMS = ANY) & (RSRC = "topic_a" | RSRC = ANY) & (RH = Resources | RH = ANY) : Grant ;
 
 
 	-- Policy for "alice@gmail.com"
 	
 	--pl_2
-	(MEMBER = "alice@gmail.com" | MEMBER = ANY) & (ROLE = "roles/pubsub.publisher" | ROLE = ANY) & (PRMS = "pubsub.topics.publish" | PRMS = ANY) & 
-	(RSRC = "topic_a" | RSRC = ANY) & (RH = Resources | RH = ANY) : Grant ;
+	(MEMBER = "alice@gmail.com" | MEMBER = ANY) & (ROLE = "roles/pubsub.publisher" | ROLE = ANY) & (PRMS = "pubsub.topics.publish" | PRMS = ANY) & (RSRC = "topic_a" | RSRC = ANY) & (RH = Resources | RH = ANY) : Grant ;
 
 	-- Default decision
 	TRUE : Deny;
@@ -78,19 +63,33 @@ SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.de
 
 -- **************************************************************************************
 -- List of additional specifications (Not included in the paper).
+-- **************************************************************************************
 
--- Check if Alice has eventually the role 'publisher' on 'project_a'. Evaluates to TRUE. Not included in the paper, but shows how to check a specification that holds.
+-- Check if Alice has eventually the role 'publisher' on 'project_a'. 
 -- SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = "roles/pubsub.publisher") & (PRMS = ANY) & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> True
+
 --SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> True 
+
 --SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> True  
+
 --SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> True 
+
 --SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> True 
+
 --SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.publish") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> True
+
 --SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.publish") & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> False
+
 --SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> False
+
 --SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> True
+
 --SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = ANY) & (RH = ANY) -> AF decision = Deny)  --> True
+
 --SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "topic_a") & (RH = ANY) -> AF decision = Grant)  --> True
+
 --SPEC AG ((MEMBER = ANY) & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "project_a") & (RH = ANY) -> AF decision = Grant)  --> True
+
 --SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "pubsub.topics.create") & (RSRC = "project_a") & (RH = ANY) -> AF decision = Grant)  --> True
+
 --SPEC AG ((MEMBER = ANY) & (ROLE = "roles/pubsub.publisher") & (PRMS = "pubsub.topics.create") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> True

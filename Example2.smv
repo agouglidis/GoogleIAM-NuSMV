@@ -27,20 +27,15 @@ ASSIGN
 	init (decision) := Deny;
 	next (decision) := case
 
--- Definition of policies
+	-- Definition of policies
 
 	----- "alice@example.com" -----
 	-- pl_1 UNION pl'_1
-	(MEMBER = "alice@example.com" | MEMBER = ANY) & ( ROLE = "roles/storage.objectAdmin" | ROLE = ANY) & 
-	(PRMS = "storage.objects.create" | PRMS = "storage.objects.delete" | PRMS = "storage.objects.update" | PRMS = "storage.objects.get" | 
-	 PRMS = "storage.objects.getIamPolicy" | PRMS = "storage.objects.list" | PRMS = "storage.objects.setIamPolicy" | PRMS = "resourcemanager.projects.get" | 
-	 PRMS = "resourcemanager.projects.list" | PRMS = ANY) & (RSRC = "project_a" | RSRC = "upload_here" | RSRC = ANY) & (RH = Projects | RH = Resources | RH = ANY) : Grant;
+	(MEMBER = "alice@example.com" | MEMBER = ANY) & ( ROLE = "roles/storage.objectAdmin" | ROLE = ANY) & (PRMS = "storage.objects.create" | PRMS = "storage.objects.delete" | PRMS = "storage.objects.update" | PRMS = "storage.objects.get" |  PRMS = "storage.objects.getIamPolicy" | PRMS = "storage.objects.list" | PRMS = "storage.objects.setIamPolicy" | PRMS = "resourcemanager.projects.get" | PRMS = "resourcemanager.projects.list" | PRMS = ANY) & (RSRC = "project_a" | RSRC = "upload_here" | RSRC = ANY) & (RH = Projects | RH = Resources | RH = ANY) : Grant;
 
 	-- pl_2 UNION pl'_2
 	----- "data_uploaders@example.com" -----
-	(MEMBER = "data_uploaders@example.com"  | MEMBER = "jane@example.com" | MEMBER = "harry@example.com" | MEMBER = "bob@example.com" | MEMBER = ANY) & 
-	(ROLE = "roles/storage.objectCreator" | ROLE = ANY) & (PRMS = "storage.objects.create" | PRMS = "resourcemanager.projects.get" | PRMS = "resourcemanager.projects.list" | 
-	 PRMS = ANY) & (RSRC = "project_a" | RSRC = "upload_here" | RSRC = ANY) & (RH = Projects | RH = Resources | RH = ANY) : Grant;
+	(MEMBER = "data_uploaders@example.com"  | MEMBER = "jane@example.com" | MEMBER = "harry@example.com" | MEMBER = "bob@example.com" | MEMBER = ANY) & (ROLE = "roles/storage.objectCreator" | ROLE = ANY) & (PRMS = "storage.objects.create" | PRMS = "resourcemanager.projects.get" | PRMS = "resourcemanager.projects.list" | PRMS = ANY) & (RSRC = "project_a" | RSRC = "upload_here" | RSRC = ANY) & (RH = Projects | RH = Resources | RH = ANY) : Grant;
 	
 	-- Default decision
 	TRUE : Deny;
@@ -65,6 +60,7 @@ SPEC AG ((MEMBER != "alice@example.com") & (ROLE = ANY) & (PRMS = "storage.objec
 
 -- **************************************************************************************
 -- List of additional specifications (Not included in the paper).
+-- **************************************************************************************
 
 -- Properties that check whether a certain member has a certain role on a certain resource  
 --SPEC AG ((MEMBER = "alice@example.com") & (ROLE = "roles/storage.objectAdmin") & (PRMS = ANY) & (RSRC = "upload_here") & (RH = Resources) -> AF decision = Grant)  --> True 
@@ -88,7 +84,7 @@ SPEC AG ((MEMBER != "alice@example.com") & (ROLE = ANY) & (PRMS = "storage.objec
 --SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Grant)  --> False 
 
 --Property that checks whether a anyone has any access on a certain resource
-SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Deny)  --> True 
+--SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Deny)  --> True 
 
 --Property that checks whether a certain permission has been assigned to anyone on a certain resource
 --SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "storage.objects.delete" | PRMS = "storage.objects.update" ) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Grant)  --> False 
