@@ -50,13 +50,13 @@ esac;
 
 -- Specifications
 
--- Specification 1. Evaluates too FALSE.
+-- Specification 1. Evaluates to FALSE.
 SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = "roles/pubsub.publisher") & (PRMS = ANY) & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant) --> True
 
--- Specification 2. Evaluates too FALSE.
+-- Specification 2. Evaluates to FALSE.
 SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.publish") & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant) --> True
 
--- Specification 3. Evaluates too FALSE.
+-- Specification 3. Evaluates to FALSE.
 SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant) --> True
 
 
@@ -65,7 +65,6 @@ SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.de
 -- List of additional specifications (Not included in the paper).
 -- **************************************************************************************
 
--- Check if Alice has eventually the role 'publisher' on 'project_a'. 
 -- SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = "roles/pubsub.publisher") & (PRMS = ANY) & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> True
 
 --SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> True 

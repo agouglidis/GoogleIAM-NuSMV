@@ -58,31 +58,24 @@ SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "compute.instances.create") & (
 -- List of additional specifications (Not included in the paper).
 -- **************************************************************************************
 
--- Properties that check whether a certain member has a certain role on a certain resource  
 --SPEC AG ((MEMBER = "bob@example.com") & (ROLE = "roles/compute.networkAdmin") & (PRMS = ANY) & (RSRC = "instance_a") & (RH = Resources) -> AF decision = Grant)  --> True 
 --SPEC AG ((MEMBER = "alice@example.com") & (ROLE = "roles/compute.instanceAdmin") & (PRMS = ANY) & (RSRC = "instance_b") & (RH = Resources) -> AF decision = Grant)  --> True 
 
--- Properties that check whether a certain member has a certain permission on a certain resource 
 --SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = "compute.instances.create") & (RSRC = "project_1") & (RH = ANY) -> AF decision = Grant)  --> False 
 
---Property that checks whether a certain member has a certain permission anywhere in the organization
 --SPEC AG ((MEMBER = "bob@example.com") & (ROLE = ANY) & (PRMS = "compute.firewalls.get") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> True 
 --SPEC AG ((MEMBER != "bob@example.com" & MEMBER != ANY) & (ROLE = ANY) & (PRMS = "compute.firewalls.get") & (RSRC = ANY) & (RH = ANY) -> AF decision = Deny)  --> True
 
---Property that checks whether a certain member has any access authorization on a certain resource
 --SPEC AG ((MEMBER = "bob@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "instance_a" | RSRC = "instance_b") & (RH = ANY) -> AF decision = Grant)  --> True
 --SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Deny)  --> True
 
---Property that checks whether a certain role has been assigned to anyone on a certain resource
 --SPEC AG ((MEMBER = ANY) & (ROLE = "roles/compute.networkAdmin" | ROLE = "roles/compute.instanceAdmin") & (PRMS = ANY) & (RSRC = "instance_a") & (RH = ANY) -> AF decision = Grant)  --> False
+
 --SPEC AG ((MEMBER = ANY) & (ROLE = "roles/compute.networkAdmin" | ROLE = "roles/compute.instanceAdmin") & (PRMS = ANY) & (RSRC = "instance_b") & (RH = ANY) -> AF decision = Grant)  --> True
 
---Property that checks whether a certain permission has been assigned to anyone on a certain resource
 --SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "compute.instances.create") & (RSRC = "project_1") & (RH = ANY) -> AF decision = Grant)  --> False 
 
---Property that checks whether a certain member has any access authorization (i.e. any role or permission) on a certain resource
 --SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "instance_a") & (RH = ANY) -> AF decision = Deny)  --> True
 
---Property that checks whether a certain role includes a certain permission
 --SPEC AG ((MEMBER = ANY) & (ROLE = "roles/compute.instanceAdmin") & (PRMS = "compute.routers.update") & (RSRC = ANY) & (RH = ANY) -> AF decision = Deny)  --> True 
 
