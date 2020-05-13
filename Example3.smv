@@ -44,13 +44,13 @@ esac;
 -- Specifications
 
 -- Specification 1. Evaluates to FALSE.
-SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = "compute.instances.create") & (RSRC = "project_1") & (RH = ANY) -> AF decision = Grant) --> TRUE    
+SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = "compute.instances.create") & (RSRC = "project_1") & (RH = ANY) -> AF decision = Grant)    
 
 -- Specification 2. Evaluates to FALSE.
-SPEC AG ((MEMBER = ANY) & (ROLE = "roles/compute.networkAdmin" | ROLE = "roles/compute.instanceAdmin") & (PRMS = ANY) & (RSRC = "instance_a") & (RH = ANY) -> AF decision = Grant) --> TRUE  
+SPEC AG ((MEMBER = ANY) & (ROLE = "roles/compute.networkAdmin" | ROLE = "roles/compute.instanceAdmin") & (PRMS = ANY) & (RSRC = "instance_a") & (RH = ANY) -> AF decision = Grant) 
 
 -- Specification 3. Evaluates to FALSE.
-SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "compute.instances.create") & (RSRC = "project_1") & (RH = ANY) -> AF decision = Grant) --> TRUE     
+SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "compute.instances.create") & (RSRC = "project_1") & (RH = ANY) -> AF decision = Grant)     
 
 
 
@@ -58,24 +58,27 @@ SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "compute.instances.create") & (
 -- List of additional specifications (Not included in the paper).
 -- **************************************************************************************
 
---SPEC AG ((MEMBER = "bob@example.com") & (ROLE = "roles/compute.networkAdmin") & (PRMS = ANY) & (RSRC = "instance_a") & (RH = Resources) -> AF decision = Grant)  --> True 
---SPEC AG ((MEMBER = "alice@example.com") & (ROLE = "roles/compute.instanceAdmin") & (PRMS = ANY) & (RSRC = "instance_b") & (RH = Resources) -> AF decision = Grant)  --> True 
+--SPEC AG ((MEMBER = "bob@example.com") & (ROLE = "roles/compute.networkAdmin") & (PRMS = ANY) & (RSRC = "instance_a") & (RH = Resources) -> AF decision = Grant) 
 
---SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = "compute.instances.create") & (RSRC = "project_1") & (RH = ANY) -> AF decision = Grant)  --> False 
+--SPEC AG ((MEMBER = "alice@example.com") & (ROLE = "roles/compute.instanceAdmin") & (PRMS = ANY) & (RSRC = "instance_b") & (RH = Resources) -> AF decision = Grant)
 
---SPEC AG ((MEMBER = "bob@example.com") & (ROLE = ANY) & (PRMS = "compute.firewalls.get") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> True 
---SPEC AG ((MEMBER != "bob@example.com" & MEMBER != ANY) & (ROLE = ANY) & (PRMS = "compute.firewalls.get") & (RSRC = ANY) & (RH = ANY) -> AF decision = Deny)  --> True
+--SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = "compute.instances.create") & (RSRC = "project_1") & (RH = ANY) -> AF decision = Grant) 
 
---SPEC AG ((MEMBER = "bob@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "instance_a" | RSRC = "instance_b") & (RH = ANY) -> AF decision = Grant)  --> True
---SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Deny)  --> True
+--SPEC AG ((MEMBER = "bob@example.com") & (ROLE = ANY) & (PRMS = "compute.firewalls.get") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)
 
---SPEC AG ((MEMBER = ANY) & (ROLE = "roles/compute.networkAdmin" | ROLE = "roles/compute.instanceAdmin") & (PRMS = ANY) & (RSRC = "instance_a") & (RH = ANY) -> AF decision = Grant)  --> False
+--SPEC AG ((MEMBER != "bob@example.com" & MEMBER != ANY) & (ROLE = ANY) & (PRMS = "compute.firewalls.get") & (RSRC = ANY) & (RH = ANY) -> AF decision = Deny)
 
---SPEC AG ((MEMBER = ANY) & (ROLE = "roles/compute.networkAdmin" | ROLE = "roles/compute.instanceAdmin") & (PRMS = ANY) & (RSRC = "instance_b") & (RH = ANY) -> AF decision = Grant)  --> True
+--SPEC AG ((MEMBER = "bob@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "instance_a" | RSRC = "instance_b") & (RH = ANY) -> AF decision = Grant)
 
---SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "compute.instances.create") & (RSRC = "project_1") & (RH = ANY) -> AF decision = Grant)  --> False 
+--SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Deny)
 
---SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "instance_a") & (RH = ANY) -> AF decision = Deny)  --> True
+--SPEC AG ((MEMBER = ANY) & (ROLE = "roles/compute.networkAdmin" | ROLE = "roles/compute.instanceAdmin") & (PRMS = ANY) & (RSRC = "instance_a") & (RH = ANY) -> AF decision = Grant)
 
---SPEC AG ((MEMBER = ANY) & (ROLE = "roles/compute.instanceAdmin") & (PRMS = "compute.routers.update") & (RSRC = ANY) & (RH = ANY) -> AF decision = Deny)  --> True 
+--SPEC AG ((MEMBER = ANY) & (ROLE = "roles/compute.networkAdmin" | ROLE = "roles/compute.instanceAdmin") & (PRMS = ANY) & (RSRC = "instance_b") & (RH = ANY) -> AF decision = Grant)
+
+--SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "compute.instances.create") & (RSRC = "project_1") & (RH = ANY) -> AF decision = Grant) 
+
+--SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "instance_a") & (RH = ANY) -> AF decision = Deny)
+
+--SPEC AG ((MEMBER = ANY) & (ROLE = "roles/compute.instanceAdmin") & (PRMS = "compute.routers.update") & (RSRC = ANY) & (RH = ANY) -> AF decision = Deny) 
 

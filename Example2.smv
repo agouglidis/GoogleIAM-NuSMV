@@ -45,16 +45,16 @@ esac;
 -- Specifications
 
 -- Specification 1. Evaluates to FALSE.
-SPEC AG ((MEMBER = "data_uploaders@example.com") &  (ROLE = ANY) & (PRMS = "storage.objects.delete") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant) --> TRUE
+SPEC AG ((MEMBER = "data_uploaders@example.com") &  (ROLE = ANY) & (PRMS = "storage.objects.delete") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant) 
 
 -- Specification 2. Evaluates to FALSE.
-SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Grant) --> TRUE  
+SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Grant)   
 
 -- Specification 3. Evaluates to FALSE.
-SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "storage.objects.delete" | PRMS = "storage.objects.update" ) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Grant) --> TRUE
+SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "storage.objects.delete" | PRMS = "storage.objects.update" ) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Grant) 
 
 -- Specification 4. Evaluates to FALSE.
-SPEC AG ((MEMBER != "alice@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.create") & (RSRC = ANY) & (RH = Resources) -> AF decision = Deny) --> TRUE
+SPEC AG ((MEMBER != "alice@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.create") & (RSRC = ANY) & (RH = Resources) -> AF decision = Deny)
 
 
 
@@ -62,26 +62,26 @@ SPEC AG ((MEMBER != "alice@example.com") & (ROLE = ANY) & (PRMS = "storage.objec
 -- List of additional specifications (Not included in the paper).
 -- **************************************************************************************
 
---SPEC AG ((MEMBER = "alice@example.com") & (ROLE = "roles/storage.objectAdmin") & (PRMS = ANY) & (RSRC = "upload_here") & (RH = Resources) -> AF decision = Grant)  --> True 
+--SPEC AG ((MEMBER = "alice@example.com") & (ROLE = "roles/storage.objectAdmin") & (PRMS = ANY) & (RSRC = "upload_here") & (RH = Resources) -> AF decision = Grant) 
 
---SPEC AG ((MEMBER = "data_uploaders@example.com") & (ROLE = "roles/storage.objectCreator") & (PRMS = ANY) & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> True
+--SPEC AG ((MEMBER = "data_uploaders@example.com") & (ROLE = "roles/storage.objectCreator") & (PRMS = ANY) & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)
 
---SPEC AG ((MEMBER = "jane@example.com") & (ROLE = "roles/storage.objectCreator") & (PRMS = ANY) & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> True  
+--SPEC AG ((MEMBER = "jane@example.com") & (ROLE = "roles/storage.objectCreator") & (PRMS = ANY) & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)
 
---SPEC AG ((MEMBER = "bob@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.create") & (RSRC = "upload_here") & (RH = Resources) -> AF decision = Grant)  --> True 
+--SPEC AG ((MEMBER = "bob@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.create") & (RSRC = "upload_here") & (RH = Resources) -> AF decision = Grant)
 
---SPEC AG ((MEMBER = "data_uploaders@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.delete") & (RSRC = "upload_here") & (RH = Resources) -> AF decision = Deny)  --> True 
+--SPEC AG ((MEMBER = "data_uploaders@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.delete") & (RSRC = "upload_here") & (RH = Resources) -> AF decision = Deny) 
 
---SPEC AG ((MEMBER = "harry@example.com") & (ROLE = "roles/storage.objectCreator") & (PRMS = ANY) & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> True
+--SPEC AG ((MEMBER = "harry@example.com") & (ROLE = "roles/storage.objectCreator") & (PRMS = ANY) & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)
 
---SPEC AG ((MEMBER = "data_uploaders@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.delete") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> False 
+--SPEC AG ((MEMBER = "data_uploaders@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.delete") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant) 
 
---SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Grant)  --> False 
+--SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Grant)
 
---SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Deny)  --> True 
+--SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Deny)
 
---SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "storage.objects.delete" | PRMS = "storage.objects.update" ) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Grant)  --> False 
+--SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "storage.objects.delete" | PRMS = "storage.objects.update" ) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Grant)  
 
---SPEC AG ((MEMBER != "alice@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.create") & (RSRC = ANY) & (RH = Resources) -> AF decision = Deny)  --> False 
+--SPEC AG ((MEMBER != "alice@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.create") & (RSRC = ANY) & (RH = Resources) -> AF decision = Deny) 
 
---SPEC AG ((MEMBER = "alice@example.com" | MEMBER = "data_uploaders@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = ANY) & (RH = Organization) -> AF decision = Deny)  --> True 
+--SPEC AG ((MEMBER = "alice@example.com" | MEMBER = "data_uploaders@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = ANY) & (RH = Organization) -> AF decision = Deny) 
