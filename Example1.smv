@@ -51,13 +51,13 @@ esac;
 -- Specifications
 
 -- Specification 1. Evaluates to FALSE.
-SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = "roles/pubsub.publisher") & (PRMS = ANY) & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant) --> True
+SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = "roles/pubsub.publisher") & (PRMS = ANY) & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant) 
 
 -- Specification 2. Evaluates to FALSE.
-SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.publish") & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant) --> True
+SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.publish") & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant) 
 
 -- Specification 3. Evaluates to FALSE.
-SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant) --> True
+SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant) 
 
 
 
@@ -65,30 +65,30 @@ SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.de
 -- List of additional specifications (Not included in the paper).
 -- **************************************************************************************
 
--- SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = "roles/pubsub.publisher") & (PRMS = ANY) & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> True
+-- SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = "roles/pubsub.publisher") & (PRMS = ANY) & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  
 
---SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> True 
+--SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)   
 
---SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> True  
+--SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)    
 
---SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> True 
+--SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)   
 
---SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> True 
+--SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  
 
---SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.publish") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> True
+--SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.publish") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  
 
---SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.publish") & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  --> False
+--SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.publish") & (RSRC = "project_a") & (RH = Projects) -> AF decision = Grant)  
 
---SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  --> False
+--SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = "topic_a") & (RH = Resources) -> AF decision = Grant)  
 
---SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> True
+--SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  
 
---SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = ANY) & (RH = ANY) -> AF decision = Deny)  --> True
+--SPEC AG ((MEMBER = "alice@gmail.com") & (ROLE = ANY) & (PRMS = "pubsub.topics.delete") & (RSRC = ANY) & (RH = ANY) -> AF decision = Deny)  
 
---SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "topic_a") & (RH = ANY) -> AF decision = Grant)  --> True
+--SPEC AG ((MEMBER = "bob@gmail.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "topic_a") & (RH = ANY) -> AF decision = Grant) 
 
---SPEC AG ((MEMBER = ANY) & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "project_a") & (RH = ANY) -> AF decision = Grant)  --> True
+--SPEC AG ((MEMBER = ANY) & (ROLE = "roles/pubsub.editor") & (PRMS = ANY) & (RSRC = "project_a") & (RH = ANY) -> AF decision = Grant)  
 
---SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "pubsub.topics.create") & (RSRC = "project_a") & (RH = ANY) -> AF decision = Grant)  --> True
+--SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "pubsub.topics.create") & (RSRC = "project_a") & (RH = ANY) -> AF decision = Grant)  
 
---SPEC AG ((MEMBER = ANY) & (ROLE = "roles/pubsub.publisher") & (PRMS = "pubsub.topics.create") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  --> True
+--SPEC AG ((MEMBER = ANY) & (ROLE = "roles/pubsub.publisher") & (PRMS = "pubsub.topics.create") & (RSRC = ANY) & (RH = ANY) -> AF decision = Grant)  
