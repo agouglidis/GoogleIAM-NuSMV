@@ -80,7 +80,7 @@ SPEC AG ((MEMBER != "alice@example.com") & (ROLE = ANY) & (PRMS = "storage.objec
 
 --SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Deny)
 
---SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "storage.objects.delete" | PRMS = "storage.objects.update" ) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Grant)  
+--SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "storage.objects.update" ) & (RSRC = "example.com") & (RH = ANY) -> AF decision = Grant)  
 
 --SPEC AG ((MEMBER != "alice@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.create") & (RSRC = ANY) & (RH = Resources) -> AF decision = Deny) 
 
