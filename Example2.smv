@@ -5,19 +5,19 @@ MODULE main
 VAR
 	MEMBER : {ANY, "alice@example.com", "data_uploaders@example.com", "jane@example.com", "harry@example.com", "bob@example.com"};
 	ROLE : {ANY, "roles/storage.objectAdmin", "roles/storage.objectCreator"};
-	PRMS : {ANY, "storage.objects.create", "storage.objects.delete", "storage.objects.update", "storage.objects.get", "storage.objects.getIamPolicy", "storage.objects.list", "storage.objects.setIamPolicy", "resourcemanager.projects.get", "resourcemanager.projects.list"};
-	RSRC:  {ANY, "example.com", "project_a", "upload_here"};
+	PERMISSION : {ANY, "storage.objects.create", "storage.objects.delete", "storage.objects.update", "storage.objects.get", "storage.objects.getIamPolicy", "storage.objects.list", "storage.objects.setIamPolicy", "resourcemanager.projects.get", "resourcemanager.projects.list"};
+	RESOURCE:  {ANY, "example.com", "project_a", "upload_here"};
 	
-	RBACGCP : RBACGCP (MEMBER, ROLE, PRMS, RSRC);
+	RBACGCP : RBACGCP (MEMBER, ROLE, PERMISSION, RESOURCE);
 	
 ASSIGN
 	next (MEMBER) := MEMBER;
 	next (ROLE) := ROLE;
-	next (PRMS) := PRMS;
-	next (RSRC) := RSRC;
+	next (PERMISSION) := PERMISSION;
+	next (RESOURCE) := RESOURCE;
 	
 
-MODULE RBACGCP (MEMBER, ROLE, PRMS, RSRC )
+MODULE RBACGCP (MEMBER, ROLE, PERMISSION, RESOURCE )
 VAR
 	decision : {Grant, Deny};
 	
@@ -29,11 +29,11 @@ ASSIGN
 
 	----- "alice@example.com" -----
 	-- pl_1 UNION pl'_1
-	(MEMBER = "alice@example.com" | MEMBER = ANY) & ( ROLE = "roles/storage.objectAdmin" | ROLE = ANY) & (PRMS = "storage.objects.create" | PRMS = "storage.objects.delete" | PRMS = "storage.objects.update" | PRMS = "storage.objects.get" |  PRMS = "storage.objects.getIamPolicy" | PRMS = "storage.objects.list" | PRMS = "storage.objects.setIamPolicy" | PRMS = "resourcemanager.projects.get" | PRMS = "resourcemanager.projects.list" | PRMS = ANY) & (RSRC = "project_a" | RSRC = "upload_here" | RSRC = ANY) : Grant;
+	(MEMBER = "alice@example.com" | MEMBER = ANY) & ( ROLE = "roles/storage.objectAdmin" | ROLE = ANY) & (PERMISSION = "storage.objects.create" | PERMISSION = "storage.objects.delete" | PERMISSION = "storage.objects.update" | PERMISSION = "storage.objects.get" |  PERMISSION = "storage.objects.getIamPolicy" | PERMISSION = "storage.objects.list" | PERMISSION = "storage.objects.setIamPolicy" | PERMISSION = "resourcemanager.projects.get" | PERMISSION = "resourcemanager.projects.list" | PERMISSION = ANY) & (RESOURCE = "project_a" | RESOURCE = "upload_here" | RESOURCE = ANY) : Grant;
 
 	-- pl_2 UNION pl'_2
 	----- "data_uploaders@example.com" -----
-	(MEMBER = "data_uploaders@example.com"  | MEMBER = "jane@example.com" | MEMBER = "harry@example.com" | MEMBER = "bob@example.com" | MEMBER = ANY) & (ROLE = "roles/storage.objectCreator" | ROLE = ANY) & (PRMS = "storage.objects.create" | PRMS = "resourcemanager.projects.get" | PRMS = "resourcemanager.projects.list" | PRMS = ANY) & (RSRC = "project_a" | RSRC = "upload_here" | RSRC = ANY) : Grant;
+	(MEMBER = "data_uploaders@example.com"  | MEMBER = "jane@example.com" | MEMBER = "harry@example.com" | MEMBER = "bob@example.com" | MEMBER = ANY) & (ROLE = "roles/storage.objectCreator" | ROLE = ANY) & (PERMISSION = "storage.objects.create" | PERMISSION = "resourcemanager.projects.get" | PERMISSION = "resourcemanager.projects.list" | PERMISSION = ANY) & (RESOURCE = "project_a" | RESOURCE = "upload_here" | RESOURCE = ANY) : Grant;
 	
 	-- Default decision
 	TRUE : Deny;
@@ -43,16 +43,16 @@ esac;
 -- Specifications
 
 -- Specification 1. Evaluates to FALSE.
-SPEC AG ((MEMBER = "data_uploaders@example.com") &  (ROLE = ANY) & (PRMS = "storage.objects.delete") & (RSRC = ANY) -> AF decision = Grant) 
+SPEC AG ((MEMBER = "data_uploaders@example.com") &  (ROLE = ANY) & (PERMISSION = "storage.objects.delete") & (RESOURCE = ANY) -> AF decision = Grant) 
 
 -- Specification 2. Evaluates to FALSE.
-SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") -> AF decision = Grant)   
+SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PERMISSION = ANY) & (RESOURCE = "example.com") -> AF decision = Grant)   
 
 -- Specification 3. Evaluates to FALSE.
-SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "storage.objects.delete" | PRMS = "storage.objects.update" ) & (RSRC = "example.com") -> AF decision = Grant) 
+SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PERMISSION = "storage.objects.delete" | PERMISSION = "storage.objects.update" ) & (RESOURCE = "example.com") -> AF decision = Grant) 
 
 -- Specification 4. Evaluates to FALSE.
-SPEC AG ((MEMBER != "alice@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.create") & (RSRC = ANY) -> AF decision = Deny)
+SPEC AG ((MEMBER != "alice@example.com") & (ROLE = ANY) & (PERMISSION = "storage.objects.create") & (RESOURCE = ANY) -> AF decision = Deny)
 
 
 
@@ -60,26 +60,26 @@ SPEC AG ((MEMBER != "alice@example.com") & (ROLE = ANY) & (PRMS = "storage.objec
 -- List of additional specifications (Not included in the paper).
 -- **************************************************************************************
 
---SPEC AG ((MEMBER = "alice@example.com") & (ROLE = "roles/storage.objectAdmin") & (PRMS = ANY) & (RSRC = "upload_here") -> AF decision = Grant) 
+--SPEC AG ((MEMBER = "alice@example.com") & (ROLE = "roles/storage.objectAdmin") & (PERMISSION = ANY) & (RESOURCE = "upload_here") -> AF decision = Grant) 
 
---SPEC AG ((MEMBER = "data_uploaders@example.com") & (ROLE = "roles/storage.objectCreator") & (PRMS = ANY) & (RSRC = "project_a") -> AF decision = Grant)
+--SPEC AG ((MEMBER = "data_uploaders@example.com") & (ROLE = "roles/storage.objectCreator") & (PERMISSION = ANY) & (RESOURCE = "project_a") -> AF decision = Grant)
 
---SPEC AG ((MEMBER = "jane@example.com") & (ROLE = "roles/storage.objectCreator") & (PRMS = ANY) & (RSRC = "project_a") -> AF decision = Grant)
+--SPEC AG ((MEMBER = "jane@example.com") & (ROLE = "roles/storage.objectCreator") & (PERMISSION = ANY) & (RESOURCE = "project_a") -> AF decision = Grant)
 
---SPEC AG ((MEMBER = "bob@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.create") & (RSRC = "upload_here") -> AF decision = Grant)
+--SPEC AG ((MEMBER = "bob@example.com") & (ROLE = ANY) & (PERMISSION = "storage.objects.create") & (RESOURCE = "upload_here") -> AF decision = Grant)
 
---SPEC AG ((MEMBER = "data_uploaders@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.delete") & (RSRC = "upload_here") -> AF decision = Deny) 
+--SPEC AG ((MEMBER = "data_uploaders@example.com") & (ROLE = ANY) & (PERMISSION = "storage.objects.delete") & (RESOURCE = "upload_here") -> AF decision = Deny) 
 
---SPEC AG ((MEMBER = "harry@example.com") & (ROLE = "roles/storage.objectCreator") & (PRMS = ANY) & (RSRC = ANY) -> AF decision = Grant)
+--SPEC AG ((MEMBER = "harry@example.com") & (ROLE = "roles/storage.objectCreator") & (PERMISSION = ANY) & (RESOURCE = ANY) -> AF decision = Grant)
 
---SPEC AG ((MEMBER = "data_uploaders@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.delete") & (RSRC = ANY) -> AF decision = Grant) 
+--SPEC AG ((MEMBER = "data_uploaders@example.com") & (ROLE = ANY) & (PERMISSION = "storage.objects.delete") & (RESOURCE = ANY) -> AF decision = Grant) 
 
---SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") -> AF decision = Grant)
+--SPEC AG ((MEMBER = "alice@example.com") & (ROLE = ANY) & (PERMISSION = ANY) & (RESOURCE = "example.com") -> AF decision = Grant)
 
---SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = ANY) & (RSRC = "example.com") -> AF decision = Deny)
+--SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PERMISSION = ANY) & (RESOURCE = "example.com") -> AF decision = Deny)
 
---SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PRMS = "storage.objects.update" ) & (RSRC = "example.com") -> AF decision = Grant)  
+--SPEC AG ((MEMBER = ANY) & (ROLE = ANY) & (PERMISSION = "storage.objects.update" ) & (RESOURCE = "example.com") -> AF decision = Grant)  
 
---SPEC AG ((MEMBER != "alice@example.com") & (ROLE = ANY) & (PRMS = "storage.objects.create") & (RSRC = ANY) -> AF decision = Deny) 
+--SPEC AG ((MEMBER != "alice@example.com") & (ROLE = ANY) & (PERMISSION = "storage.objects.create") & (RESOURCE = ANY) -> AF decision = Deny) 
 
---SPEC AG ((MEMBER = "alice@example.com" | MEMBER = "data_uploaders@example.com") & (ROLE = ANY) & (PRMS = ANY) & (RSRC = ANY) -> AF decision = Deny) 
+--SPEC AG ((MEMBER = "alice@example.com" | MEMBER = "data_uploaders@example.com") & (ROLE = ANY) & (PERMISSION = ANY) & (RESOURCE = ANY) -> AF decision = Deny) 
